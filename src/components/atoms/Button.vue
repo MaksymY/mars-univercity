@@ -1,26 +1,18 @@
 <template>
-  <button class="button">
-    <slot />
-  </button>
+	<button class="button">
+		<slot />
+	</button>
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent } from "vue";
 
-export default defineComponent({
-  props: {
-    lol: {
-      type: String,
-      default: "hello",
-      required: true,
-    },
-  },
-});
+export default defineComponent({});
 </script>
 
 <style lang="scss">
 .button {
-  border-radius: 8px;
-  color: $red;
+	border-radius: 8px;
+	color: $red;
 }
 </style>
