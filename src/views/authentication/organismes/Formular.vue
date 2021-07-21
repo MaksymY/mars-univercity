@@ -1,19 +1,33 @@
 <template>
 	<section class="formular">
-		<p>Connectez-vous</p>
-		<p>Vous ne possédez pas de compte ?</p>
-		<p>Inscrivez-vous</p>
-		<Form class="formular__form" />
-		<Form class="formular__form" />
-		<Button class="formular__button" :text="'Suivant'">
+		<p class="formular__title">Connectez-vous</p>
+		<Form
+			class="formular__form"
+			:model-value="signIn.email"
+			label="E-MAIL"
+			type="email"
+			placeholder="exemple@mail.com"
+			@update:modelValue="updateEmail"
+		/>
+		<Form
+			class="formular__form"
+			:model-value="signIn.password"
+			label="MOT DE PASSE"
+			type="password"
+			placeholder="Plus de 6 charactères"
+			@update:modelValue="updatePassword"
+		/>
+		<Button class="formular__button" text="Suivant">
 			<template #Icon>
 				<Icon class="formular__button-icon" href="right-arrow" />
 			</template>
 		</Button>
 	</section>
 </template>
+
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
+import { SingIn } from "../../../services/types/auth";
 import Form from "../atoms/Form.vue";
 import Button from "../../../components/atoms/Button.vue";
 import Icon from "../../../components/atoms/Icon.vue";
@@ -25,33 +39,55 @@ export default defineComponent({
 		Button,
 		Icon,
 	},
+	setup() {
+		const signIn = ref({
+			email: "",
+			password: "",
+		} as SingIn);
+
+		return {
+			signIn,
+			updateEmail(value: string) {
+				signIn.value.email = value;
+			},
+			updatePassword(value: string) {
+				signIn.value.password = value;
+			},
+		};
+	},
 });
 </script>
+
 <style lang="scss">
 .formular {
 	display: flex;
-	flex-direction: column;
+	align-items: center;
 	justify-content: center;
+	flex-direction: column;
 	text-align: center;
 	color: white;
 	background-color: $BlackRussian;
 	border-radius: 10px;
-	height: 100%;
-	width: 100%;
+	padding: 80px;
+
+	&__title {
+		font-size: 32px;
+		margin: 0;
+	}
 
 	&__form {
-		width: 60%;
 		align-self: center;
+		margin-top: 32px;
+		width: 100%;
 	}
 
 	&__button {
+		display: flex;
+		gap: 8px;
 		background-color: $Ruby;
 		color: white;
-		align-items: center;
-		justify-content: center;
 		border: 2px solid rgba(255, 255, 255, 0.2);
-		width: 20%;
-		align-self: center;
+		margin-top: 32px;
 	}
 
 	&__button-icon {

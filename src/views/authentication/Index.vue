@@ -28,10 +28,5 @@ export default defineComponent({
 	background-origin: border-box;
 	background-size: cover;
 	background-color: $Darkest;
-
-	&__icon {
-		fill: white;
-		width: 30px;
-	}
 }
 </style>
