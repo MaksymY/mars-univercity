@@ -1,5 +1,5 @@
 <template>
-	<ModuleLayout label="Taux d'occupation" :chart-config="chartConfig" />
+	<ModuleLayout label="Oxygène" :chart-config="chartConfig" :custom-chart-style="chartStyle" />
 </template>
 
 <script lang="ts">
@@ -10,12 +10,12 @@ import { ChartConfiguration } from "chart.js";
 import ModuleLayout from "../ModuleLayout.vue";
 
 export default defineComponent({
-	name: "OccupancyRateModule",
+	name: "OxygenModule",
 	components: {
 		ModuleLayout,
 	},
 	props: {
-		dataSet: {
+		dataSets: {
 			type: Object,
 			required: true,
 		},
@@ -23,16 +23,14 @@ export default defineComponent({
 	data() {
 		return {
 			chartConfig: {
-				type: "doughnut",
+				type: "bar",
 				data: {
-					labels: ["Purple"],
+					labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
 					datasets: [
 						{
-							label: "Pers",
-							data: [62],
-							backgroundColor: ["rgba(153, 102, 255, 0.2)"],
-							borderColor: ["rgba(153, 102, 255, 1)"],
-							borderWidth: 1,
+							label: "# of Votes",
+							barThickness: 6,
+							data: [12, 19, 3, 5, 2, 3],
 						},
 					],
 				},
@@ -44,6 +42,9 @@ export default defineComponent({
 					},
 				},
 			} as ChartConfiguration,
+			chartStyle: {
+				linearGradient: { firstColor: "red", secondColor: "blue" },
+			},
 		};
 	},
 });

@@ -4,7 +4,7 @@
 			<Icon class="module-layout__header__icon" href="people-square-icon" />
 			<h3 class="module-layout__header__title">{{ label }}</h3>
 		</div>
-		<canvas :id="`${label}-canvas`" width="200" height="200"></canvas>
+		<canvas :id="`${label}-canvas`"></canvas>
 	</div>
 </template>
 
@@ -36,6 +36,19 @@ export default defineComponent({
 			default: null,
 		},
 	},
+	computed: {
+		canvasDimensions() {
+			const canvasParent: Element | null = document.querySelector(".module-layout");
+			if (canvasParent) {
+				const cs = getComputedStyle(canvasParent);
+				return {
+					width: parseInt(cs.getPropertyValue("width"), 10),
+					height: parseInt(cs.getPropertyValue("height"), 10),
+				};
+			}
+			return null;
+		},
+	},
 	mounted(): void {
 		this.initChart();
 	},
@@ -55,6 +68,7 @@ export default defineComponent({
 		// @TODO fix types here
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		getChartCustomStyle(ctx: HTMLCanvasElement): any {
+			console.log(this.canvasDimensions);
 			if (!this.customChartStyle) {
 				return {};
 			}
