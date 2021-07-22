@@ -11,13 +11,11 @@
 <script lang="ts">
 import { defineComponent, PropType } from "vue";
 
-
 import { Chart, registerables, ChartConfiguration } from "chart.js";
 
 Chart.register(...registerables);
 
 import Icon from "@/components/atoms/Icon.vue";
-
 
 export default defineComponent({
 	name: "Authentification",
@@ -33,12 +31,50 @@ export default defineComponent({
 			type: Object as PropType<ChartConfiguration>,
 			required: true,
 		},
+		customChartStyle: {
+			type: Object,
+			default: null,
+		},
 	},
-	mounted() {
-		new Chart(
-			document.getElementById(`${this.label}-canvas`) as HTMLCanvasElement,
-			this.chartConfig,
-		);
+	mounted(): void {
+		this.initChart();
+	},
+	methods: {
+		initChart(): void {
+			const ctx: HTMLCanvasElement = document.getElementById(
+				`${this.label}-canvas`,
+			) as HTMLCanvasElement;
+			const customStyle = this.getChartCustomStyle(ctx);
+			const chartConfigDataSets = this.chartConfig.data.datasets;
+			const definitivDataSets = [{ ...chartConfigDataSets[0], ...customStyle }];
+			let definitivChartConfig = { ...this.chartConfig };
+			definitivChartConfig.data.datasets = definitivDataSets;
+			new Chart(ctx, definitivChartConfig);
+			console.log(definitivChartConfig);
+		},
+		// @TODO fix types here
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		getChartCustomStyle(ctx: HTMLCanvasElement): any {
+			if (!this.customChartStyle) {
+				return {};
+			}
+			const twoDimensionsCtx = ctx.getContext("2d");
+			if (this.customChartStyle.linearGradient) {
+				let linearGradient;
+				if (twoDimensionsCtx) {
+					linearGradient = twoDimensionsCtx.createLinearGradient(
+						0,
+						0,
+						0,
+						(twoDimensionsCtx.canvas.height * 10) / 2,
+					);
+					linearGradient.addColorStop(0, this.customChartStyle.linearGradient.firstColor);
+					linearGradient.addColorStop(1, this.customChartStyle.linearGradient.secondColor);
+				}
+				return { backgroundColor: linearGradient };
+			}
+			return {};
+		},
 	},
 });
 </script>

@@ -1,5 +1,5 @@
 <template>
-	<ModuleLayout label="Électricité" :chart-config="chartConfig" />
+	<ModuleLayout label="Électricité" :chart-config="chartConfig" :custom-chart-style="chartStyle" />
 </template>
 
 <script lang="ts">
@@ -15,7 +15,7 @@ export default defineComponent({
 		ModuleLayout,
 	},
 	props: {
-		dataSet: {
+		dataSets: {
 			type: Object,
 			required: true,
 		},
@@ -29,24 +29,8 @@ export default defineComponent({
 					datasets: [
 						{
 							label: "# of Votes",
+							barThickness: 6,
 							data: [12, 19, 3, 5, 2, 3],
-							backgroundColor: [
-								"rgba(255, 99, 132, 0.2)",
-								"rgba(54, 162, 235, 0.2)",
-								"rgba(255, 206, 86, 0.2)",
-								"rgba(75, 192, 192, 0.2)",
-								"rgba(153, 102, 255, 0.2)",
-								"rgba(255, 159, 64, 0.2)",
-							],
-							borderColor: [
-								"rgba(255, 99, 132, 1)",
-								"rgba(54, 162, 235, 1)",
-								"rgba(255, 206, 86, 1)",
-								"rgba(75, 192, 192, 1)",
-								"rgba(153, 102, 255, 1)",
-								"rgba(255, 159, 64, 1)",
-							],
-							borderWidth: 1,
 						},
 					],
 				},
@@ -58,6 +42,9 @@ export default defineComponent({
 					},
 				},
 			} as ChartConfiguration,
+			chartStyle: {
+				linearGradient: { firstColor: "red", secondColor: "blue" },
+			},
 		};
 	},
 });
