@@ -1,20 +1,20 @@
 <template>
 	<div class="authentification">
 		<Welcome />
-		<Formular />
+		<Form />
 	</div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Welcome from "./organismes/Welcome.vue";
-import Formular from "./organismes/Formular.vue";
+import Welcome from "./components/organismes/Welcome.vue";
+import Form from "./components/organismes/Form.vue";
 
 export default defineComponent({
 	name: "Authentification",
 	components: {
 		Welcome,
-		Formular,
+		Form,
 	},
 });
 </script>
@@ -28,10 +28,5 @@ export default defineComponent({
 	background-origin: border-box;
 	background-size: cover;
 	background-color: $Darkest;
-
-	&__icon {
-		fill: white;
-		width: 30px;
-	}
 }
 </style>
