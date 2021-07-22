@@ -1,8 +1,7 @@
 <template>
 	<div class="dashboard">
-		<ModuleLayout>
-			<ChartLayout :chart-config="occupancyRateChartConfig" />
-		</ModuleLayout>
+		<ElectricityModule></ElectricityModule>
+		<OccupancyRateModule></OccupancyRateModule>
 	</div>
 </template>
 
@@ -11,14 +10,16 @@ import { defineComponent } from "vue";
 
 import OccupancyRate from "@/Utils/ChartsConfigs/OccupancyRate";
 
-import ModuleLayout from "./components/organisms/ModuleLayout.vue";
-import ChartLayout from "./components/organisms/ChartLayout.vue";
+// Metrics modules imports
+import ElectricityModule from "./components/organisms/modules/ElectricityModule.vue"
+import OccupancyRateModule from "./components/organisms/modules/OccupancyRateModule.vue"
+
 
 export default defineComponent({
 	name: "Dashboard",
 	components: {
-		ModuleLayout,
-		ChartLayout,
+		ElectricityModule,
+		OccupancyRateModule,
 	},
 	data() {
 		return {
