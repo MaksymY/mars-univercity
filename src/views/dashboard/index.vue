@@ -1,9 +1,7 @@
 <template>
 	<div class="dashboard">
 		<ModuleLayout>
-			<template #Content>
-				<line-chart class="test" :chart-data="datacollection"></line-chart>
-			</template>
+			<ChartLayout :chart-config="occupancyRateChartConfig" />
 		</ModuleLayout>
 	</div>
 </template>
@@ -11,44 +9,21 @@
 <script lang="js">
 import { defineComponent } from "vue";
 
+import OccupancyRate from "@/Utils/ChartsConfigs/OccupancyRate";
+
 import ModuleLayout from "./components/organisms/ModuleLayout.vue";
-import LineChart from "./Line.vue"
+import ChartLayout from "./components/organisms/ChartLayout.vue";
 
 export default defineComponent({
 	name: "Dashboard",
 	components: {
 		ModuleLayout,
-		LineChart
+		ChartLayout,
 	},
 	data() {
 		return {
-			datacollection: null,
+			occupancyRateChartConfig: OccupancyRate,
 		};
-	},
-	mounted() {
-		this.fillData();
-	},
-	methods: {
-		fillData() {
-			this.datacollection = {
-				labels: [this.getRandomInt(), this.getRandomInt()],
-				datasets: [
-					{
-						label: "Data One",
-						backgroundColor: "#f87979",
-						data: [this.getRandomInt(), this.getRandomInt()],
-					},
-					{
-						label: "Data One",
-						backgroundColor: "#f87979",
-						data: [this.getRandomInt(), this.getRandomInt()],
-					},
-				],
-			};
-		},
-		getRandomInt() {
-			return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
-		},
 	},
 });
 </script>

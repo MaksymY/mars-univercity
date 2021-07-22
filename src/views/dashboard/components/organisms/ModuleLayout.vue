@@ -4,7 +4,7 @@
 			<Icon class="peopleIcon" href="people-square-icon" />
 			<p class="module__title">Taux d’occupation</p>
 		</div>
-		<slot name="Content" />
+		<slot />
 	</div>
 </template>
 

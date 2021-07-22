@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Authentification from "../views/authentication/index.vue";
-import Dashboard from "../views/dashboard/index.vue";
+import Authentification from "@/views/authentication/index.vue";
+import Dashboard from "@/views/dashboard/index.vue";
 
 const routes: Array<RouteRecordRaw> = [
 	{
