@@ -23,7 +23,7 @@
 		"src/**/*.vue",
 		"tests/**/*.ts",
 		"tests/**/*.tsx",
-		"src/views/authentication/Index.vue",
+		"src/views/authentication/index.vue",
 		"src/views/authentication/Authentification.vue"
 	],
 	"exclude": ["node_modules"]

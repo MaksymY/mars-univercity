@@ -2,41 +2,52 @@
 	<div class="dashboard">
 		<ModuleLayout>
 			<template #Content>
-				<vue3-chart-js
-					:id="doughnutChart.id"
-					:type="doughnutChart.type"
-					:data="doughnutChart.data"
-					@before-render="beforeRenderLogic"
-				></vue3-chart-js>
+				<line-chart class="test" :chart-data="datacollection"></line-chart>
 			</template>
 		</ModuleLayout>
 	</div>
 </template>
 
-<script lang="ts">
+<script lang="js">
 import { defineComponent } from "vue";
 
-import ModuleLayout from "./organisms/ModuleLayout.vue";
-import Vue3ChartJs from "@j-t-mcc/vue3-chartjs";
+import ModuleLayout from "./components/organisms/ModuleLayout.vue";
+import LineChart from "./Line.vue"
 
 export default defineComponent({
 	name: "Dashboard",
 	components: {
 		ModuleLayout,
-		LineChart,
+		LineChart
 	},
-	labels: ["Apples", "Bananas", "Grapes"],
-	datasets: [
-		{
-			data: [20, 30, 50],
-			backgroundColor: ["red", "yellow", "purple"],
+	data() {
+		return {
+			datacollection: null,
+		};
+	},
+	mounted() {
+		this.fillData();
+	},
+	methods: {
+		fillData() {
+			this.datacollection = {
+				labels: [this.getRandomInt(), this.getRandomInt()],
+				datasets: [
+					{
+						label: "Data One",
+						backgroundColor: "#f87979",
+						data: [this.getRandomInt(), this.getRandomInt()],
+					},
+					{
+						label: "Data One",
+						backgroundColor: "#f87979",
+						data: [this.getRandomInt(), this.getRandomInt()],
+					},
+				],
+			};
 		},
-	],
-	option: {
-		title: {
-			display: true,
-			position: "bottom",
-			text: "Fruits",
+		getRandomInt() {
+			return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
 		},
 	},
 });
