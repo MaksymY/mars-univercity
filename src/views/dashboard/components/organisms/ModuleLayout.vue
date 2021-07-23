@@ -79,7 +79,7 @@ export default defineComponent({
 						0,
 						0,
 						0,
-						(twoDimensionsCtx.canvas.height * 10) / 2,
+						(twoDimensionsCtx.canvas.height * 2) / 2,
 					);
 					linearGradient.addColorStop(0, this.customChartStyle.linearGradient.firstColor);
 					linearGradient.addColorStop(1, this.customChartStyle.linearGradient.secondColor);

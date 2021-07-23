@@ -1,5 +1,6 @@
 import ky from "ky";
 import { UserInfo } from "@/services/types/auth";
+import { User } from "@/services/types/user";
 
 const api = ky.create({
 	prefixUrl: "https://api-mars-university.herokuapp.com/",
@@ -20,4 +21,8 @@ export function LoginUser(email: string, password: string): Promise<UserInfo> {
 			},
 		})
 		.then(dataHandler);
+}
+
+export function getRoomUsers(room_id: string): Promise<User[]> {
+	return api.get(`sensor/getAllUserRoomWatchData`, { json: { room_id } }).then(dataHandler);
 }

@@ -6903,6 +6903,11 @@
   "resolved" "https://registry.npmjs.org/kleur/-/kleur-3.0.3.tgz"
   "version" "3.0.3"
 
+"ky@^0.28.5":
+  "integrity" "sha512-O5gg9kF4MeyfSw+YkgPAafOPwEUU6xcdGEJKUJmKpIPbLzk3oxUtY4OdBNekG7mawofzkyZ/ZHuR9ev5uZZdAA=="
+  "resolved" "https://registry.npmjs.org/ky/-/ky-0.28.5.tgz"
+  "version" "0.28.5"
+
 "launch-editor-middleware@^2.2.1":
   "integrity" "sha512-s0UO2/gEGiCgei3/2UN3SMuUj1phjQN8lcpnvgLSz26fAzNWPQ6Nf/kF5IFClnfU2ehp6LrmKdMU/beveO+2jg=="
   "resolved" "https://registry.npmjs.org/launch-editor-middleware/-/launch-editor-middleware-2.2.1.tgz"
@@ -10695,9 +10700,9 @@
     "tsconfig" "^7.0.0"
 
 "vue-loader-v16@npm:vue-loader@^16.1.0":
-  "integrity" "sha512-By7ba0FSk5erMZNoMcy1Tzt1qjZ3f6DpzLTnic8tpH5IyFPKFEgbCnfFC4DPO1iNx3n6QoBFAaS1kK1L4UcJPg=="
-  "resolved" "https://registry.npmjs.org/vue-loader/-/vue-loader-16.3.2.tgz"
-  "version" "16.3.2"
+  "integrity" "sha512-/1GzCuQ6MRORbC+leKTKoTGtpQt60bYe0gDGEextSteA2OM+v201FPha5jzmjQzVhRcwieZeUvezAtG5a/e5cw=="
+  "resolved" "https://registry.npmjs.org/vue-loader/-/vue-loader-16.3.3.tgz"
+  "version" "16.3.3"
   dependencies:
     "chalk" "^4.1.0"
     "hash-sum" "^2.0.0"
