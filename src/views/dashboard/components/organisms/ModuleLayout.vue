@@ -63,7 +63,6 @@ export default defineComponent({
 			let definitivChartConfig = { ...this.chartConfig };
 			definitivChartConfig.data.datasets = definitivDataSets;
 			new Chart(ctx, definitivChartConfig);
-			console.log(definitivChartConfig);
 		},
 		// @TODO fix types here
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any

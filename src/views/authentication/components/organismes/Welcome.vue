@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import BrandLogo from "../../../components/atoms/BrandLogo.vue";
+import BrandLogo from "@/components/atoms/BrandLogo.vue";
 
 export default defineComponent({
 	name: "Welcome",

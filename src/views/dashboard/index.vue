@@ -8,6 +8,8 @@
 			<LuminosityModule class="dashboard__datas__luminosity"></LuminosityModule>
 		</div>
 		<RoomOccupants class="dashboard__room-occupants"></RoomOccupants>
+		<!-- <ElectricityModule></ElectricityModule> -->
+		<OccupancyRateModule></OccupancyRateModule>
 	</div>
 </template>
 
@@ -17,7 +19,7 @@ import { defineComponent } from "vue";
 import OccupancyRate from "@/Utils/ChartsConfigs/OccupancyRate";
 
 // Metrics modules imports
-import ElectricityModule from "./components/organisms/modules/ElectricityModule.vue"
+// import ElectricityModule from "./components/organisms/modules/ElectricityModule.vue"
 import OccupancyRateModule from "./components/organisms/modules/OccupancyRateModule.vue"
 import OxygenModule from "./components/organisms/modules/OxygenModule.vue"
 import LuminosityModule from "./components/organisms/modules/LuminosityModule.vue"
@@ -28,7 +30,7 @@ import RoomOccupants from "./components/organisms/RoomOccupants.vue"
 export default defineComponent({
 	name: "Dashboard",
 	components: {
-		ElectricityModule,
+		// ElectricityModule,
 		OccupancyRateModule,
 		OxygenModule,
 		LuminosityModule,
