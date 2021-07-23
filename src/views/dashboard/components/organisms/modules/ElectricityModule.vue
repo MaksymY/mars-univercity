@@ -31,6 +31,7 @@ export default defineComponent({
 							label: "# of Votes",
 							barThickness: 6,
 							data: [12, 19, 3, 5, 2, 3],
+							borderRadius: 20,
 						},
 					],
 				},

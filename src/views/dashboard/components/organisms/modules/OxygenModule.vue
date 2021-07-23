@@ -25,12 +25,13 @@ export default defineComponent({
 			chartConfig: {
 				type: "bar",
 				data: {
-					labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+					labels: ["13h", "13h30", "14h", "15h", "15h30", "16h"],
 					datasets: [
 						{
 							label: "# of Votes",
 							barThickness: 6,
-							data: [12, 19, 3, 5, 2, 3],
+							data: [2700, 2800, 2100, 2540, 2600, 2230],
+							borderRadius: 20,
 						},
 					],
 				},

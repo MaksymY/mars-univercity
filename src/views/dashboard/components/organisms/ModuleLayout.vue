@@ -98,6 +98,7 @@ export default defineComponent({
 	background-color: $BlackRussian;
 	color: white;
 	padding: $m;
+	border-radius: 10px;
 
 	&__header {
 		display: flex;
@@ -113,6 +114,10 @@ export default defineComponent({
 		&__title {
 			font-size: 16px;
 		}
+	}
+
+	canvas {
+		max-height: 80%;
 	}
 }
 </style>

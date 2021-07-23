@@ -1,10 +1,13 @@
 <template>
 	<div class="dashboard">
-		<OccupancyRateModule class="dashboard__occupancy"></OccupancyRateModule>
-		<ElectricityModule class="dashboard__electricity"></ElectricityModule>
-		<OxygenModule class="dashboard__oxygen"></OxygenModule>
-		<TemperatureModule class="dashboard__temperature"></TemperatureModule>
-		<LuminosityModule class="dashboard__luminosity"></LuminosityModule>
+		<div class="dashboard__datas">
+			<OccupancyRateModule class="dashboard__datas__occupancy"></OccupancyRateModule>
+			<ElectricityModule class="dashboard__datas__electricity"></ElectricityModule>
+			<OxygenModule class="dashboard__datas__oxygen"></OxygenModule>
+			<TemperatureModule class="dashboard__datas__temperature"></TemperatureModule>
+			<LuminosityModule class="dashboard__datas__luminosity"></LuminosityModule>
+		</div>
+		<RoomOccupants class="dashboard__room-occupants"></RoomOccupants>
 	</div>
 </template>
 
@@ -20,6 +23,7 @@ import OxygenModule from "./components/organisms/modules/OxygenModule.vue"
 import LuminosityModule from "./components/organisms/modules/LuminosityModule.vue"
 import TemperatureModule from "./components/organisms/modules/TemperatureModule.vue"
 
+import RoomOccupants from "./components/organisms/RoomOccupants.vue"
 
 export default defineComponent({
 	name: "Dashboard",
@@ -28,7 +32,8 @@ export default defineComponent({
 		OccupancyRateModule,
 		OxygenModule,
 		LuminosityModule,
-		TemperatureModule
+		TemperatureModule,
+		RoomOccupants
 	},
 	data() {
 		return {
@@ -40,28 +45,39 @@ export default defineComponent({
 
 <style lang="scss">
 .dashboard {
-	display: grid;
-	grid-template:
-		"a a b b b b" 10%
-		"a a c c d d" 46%
-		"e e e f f f" 36% / 1fr 1fr 1fr 1fr 1fr 1fr;
+	display: flex;
 
-	grid-gap: 2%;
+	&__datas {
+		padding: 1rem;
+		height: 70%;
+		width: 70%;
+		display: grid;
+		grid-template:
+			"a a b b b b" 10%
+			"a a c c d d" 46%
+			"e e e f f f" 36% / 1fr 1fr 1fr 1fr 1fr 1fr;
 
-	&__occupancy {
-		grid-area: a;
+		grid-gap: 2%;
+
+		&__occupancy {
+			grid-area: a;
+		}
+		&__electricity {
+			grid-area: e;
+		}
+		&__oxygen {
+			grid-area: f;
+		}
+		&__temperature {
+			grid-area: d;
+		}
+		&__luminosity {
+			grid-area: c;
+		}
 	}
-	&__electricity {
-		grid-area: e;
-	}
-	&__oxygen {
-		grid-area: f;
-	}
-	&__temperature {
-		grid-area: d;
-	}
-	&__luminosity {
-		grid-area: c;
+
+	&__room-occupants {
+		width: 30%;
 	}
 }
 </style>
