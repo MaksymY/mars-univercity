@@ -28,6 +28,14 @@ export default defineComponent({
 			required: true,
 		},
 	},
+	data: function () {
+		return {
+			styleObject: {
+				color: "red",
+				fontSize: "13px",
+			},
+		};
+	},
 });
 </script>
 
