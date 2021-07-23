@@ -1,11 +1,18 @@
 <template>
 	<div class="dashboard">
 		<div class="dashboard__datas">
-			<OccupancyRateModule class="dashboard__datas__occupancy"></OccupancyRateModule>
-			<ElectricityModule class="dashboard__datas__electricity"></ElectricityModule>
-			<OxygenModule class="dashboard__datas__oxygen"></OxygenModule>
-			<TemperatureModule class="dashboard__datas__temperature"></TemperatureModule>
-			<LuminosityModule class="dashboard__datas__luminosity"></LuminosityModule>
+			<router-link class="dashboard__datas__back-link" to="/"
+				>&#129044; Retour à la carte</router-link
+			>
+			<div></div>
+			<h1>Le nom de la salle</h1>
+			<div class="dashboard__datas__charts">
+				<OccupancyRateModule class="dashboard__datas__charts__occupancy"></OccupancyRateModule>
+				<ElectricityModule class="dashboard__datas__charts__electricity"></ElectricityModule>
+				<OxygenModule class="dashboard__datas__charts__oxygen"></OxygenModule>
+				<TemperatureModule class="dashboard__datas__charts__temperature"></TemperatureModule>
+				<LuminosityModule class="dashboard__datas__charts__luminosity"></LuminosityModule>
+			</div>
 		</div>
 		<RoomOccupants class="dashboard__room-occupants"></RoomOccupants>
 	</div>
@@ -46,33 +53,50 @@ export default defineComponent({
 <style lang="scss">
 .dashboard {
 	display: flex;
+	background-image: url("./../../assets/background-with-cross.jpg");
+	color: $white;
 
 	&__datas {
 		padding: 1rem;
-		height: 70%;
 		width: 70%;
-		display: grid;
-		grid-template:
-			"a a b b b b" 10%
-			"a a c c d d" 46%
-			"e e e f f f" 36% / 1fr 1fr 1fr 1fr 1fr 1fr;
+		display: flex;
+		flex-direction: column;
+		justify-content: flex-end;
 
-		grid-gap: 2%;
+		&__back-link {
+			color: $white;
+			text-decoration: none;
 
-		&__occupancy {
-			grid-area: a;
+			&:hover {
+				font-weight: bold;
+			}
 		}
-		&__electricity {
-			grid-area: e;
-		}
-		&__oxygen {
-			grid-area: f;
-		}
-		&__temperature {
-			grid-area: d;
-		}
-		&__luminosity {
-			grid-area: c;
+
+		&__charts {
+			height: 80%;
+			display: grid;
+			grid-template:
+				"a a b b b b" 10%
+				"a a c c d d" 46%
+				"e e e f f f" 36% / 1fr 1fr 1fr 1fr 1fr 1fr;
+
+			grid-gap: 2%;
+
+			&__occupancy {
+				grid-area: a;
+			}
+			&__electricity {
+				grid-area: e;
+			}
+			&__oxygen {
+				grid-area: f;
+			}
+			&__temperature {
+				grid-area: d;
+			}
+			&__luminosity {
+				grid-area: c;
+			}
 		}
 	}
 
