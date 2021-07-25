@@ -8,10 +8,22 @@
 			<h1>Le nom de la salle</h1>
 			<div class="dashboard__datas__charts">
 				<OccupancyRateModule class="dashboard__datas__charts__occupancy"></OccupancyRateModule>
-				<ElectricityModule class="dashboard__datas__charts__electricity"></ElectricityModule>
-				<OxygenModule class="dashboard__datas__charts__oxygen"></OxygenModule>
-				<TemperatureModule class="dashboard__datas__charts__temperature"></TemperatureModule>
-				<LuminosityModule class="dashboard__datas__charts__luminosity"></LuminosityModule>
+				<ElectricityModule
+					class="dashboard__datas__charts__electricity"
+					:data-sets="roomSensorsData.Watts"
+				></ElectricityModule>
+				<OxygenModule
+					class="dashboard__datas__charts__oxygen"
+					:data-sets="roomSensorsData.Oxygen"
+				></OxygenModule>
+				<TemperatureModule
+					class="dashboard__datas__charts__temperature"
+					:data-sets="roomSensorsData.Temperature"
+				></TemperatureModule>
+				<LuminosityModule
+					class="dashboard__datas__charts__luminosity"
+					:data-sets="roomSensorsData.Luminosity"
+				></LuminosityModule>
 			</div>
 		</div>
 		<RoomOccupants class="dashboard__room-occupants"></RoomOccupants>
@@ -32,6 +44,8 @@ import TemperatureModule from "./components/organisms/modules/TemperatureModule.
 
 import RoomOccupants from "./components/organisms/RoomOccupants.vue"
 
+import { getRoomSensorsData } from "@/services/api";
+
 export default defineComponent({
 	name: "Dashboard",
 	components: {
@@ -44,9 +58,27 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			occupancyRateChartConfig: OccupancyRate,
+			roomSensorsData: null
 		};
 	},
+	mounted() {
+		this.getRoomSensorsData();
+	},
+	methods: {
+		async getRoomSensorsData() {
+			const data = await getRoomSensorsData("951951");
+			const dataMappedByMeasurement = {}
+			for (const sensorData of data.roomData) {
+				if (sensorData._measurement in dataMappedByMeasurement) {
+					dataMappedByMeasurement[sensorData._measurement].push(sensorData)
+				}
+				else dataMappedByMeasurement[sensorData._measurement] = [sensorData]
+			}
+			this.roomSensorsData =  dataMappedByMeasurement
+
+			console.log(data, "roomStats");
+		},
+	}
 });
 </script>
 

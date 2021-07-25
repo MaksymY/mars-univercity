@@ -1,10 +1,11 @@
 <template>
 	<div class="module-layout">
 		<div class="module-layout__header">
-			<Icon class="module-layout__header__icon" href="people-square-icon" />
+			<Icon class="module-layout__header__icon" :href="icon || 'bulb-icon'" />
 			<h3 class="module-layout__header__title">{{ label }}</h3>
 		</div>
-		<canvas :id="`${label}-canvas`"></canvas>
+		<canvas v-if="chartConfig" :id="`${label}-canvas`"></canvas>
+		<slot />
 	</div>
 </template>
 
@@ -13,9 +14,9 @@ import { defineComponent, PropType } from "vue";
 
 import { Chart, registerables, ChartConfiguration } from "chart.js";
 
-Chart.register(...registerables);
-
 import Icon from "@/components/atoms/Icon.vue";
+
+Chart.register(...registerables);
 
 export default defineComponent({
 	name: "Authentification",
@@ -29,11 +30,15 @@ export default defineComponent({
 		},
 		chartConfig: {
 			type: Object as PropType<ChartConfiguration>,
-			required: true,
+			default: null,
 		},
 		customChartStyle: {
 			type: Object,
 			default: null,
+		},
+		icon: {
+			type: String,
+			required: true,
 		},
 	},
 	computed: {
@@ -50,7 +55,9 @@ export default defineComponent({
 		},
 	},
 	mounted(): void {
-		this.initChart();
+		if (this.chartConfig) {
+			this.initChart();
+		}
 	},
 	methods: {
 		initChart(): void {
@@ -79,7 +86,7 @@ export default defineComponent({
 						0,
 						0,
 						0,
-						(twoDimensionsCtx.canvas.height * 10) / 2,
+						(twoDimensionsCtx.canvas.height * 2) / 2,
 					);
 					linearGradient.addColorStop(0, this.customChartStyle.linearGradient.firstColor);
 					linearGradient.addColorStop(1, this.customChartStyle.linearGradient.secondColor);
@@ -98,6 +105,8 @@ export default defineComponent({
 	color: white;
 	padding: $m;
 	border-radius: 10px;
+	display: flex;
+	flex-direction: column;
 
 	&__header {
 		display: flex;
@@ -106,8 +115,10 @@ export default defineComponent({
 		&__icon {
 			width: 24px;
 			height: 24px;
-			stroke: $white;
 			margin-right: $xxs;
+
+			fill: $white;
+			stroke: $white;
 		}
 
 		&__title {

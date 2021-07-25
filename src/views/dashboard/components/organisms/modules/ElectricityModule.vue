@@ -1,9 +1,14 @@
 <template>
-	<ModuleLayout label="Électricité" :chart-config="chartConfig" :custom-chart-style="chartStyle" />
+	<ModuleLayout
+		label="Électricité"
+		:chart-config="chartConfig"
+		:custom-chart-style="chartStyle"
+		icon="electricity-icon"
+	></ModuleLayout>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
 
 import { ChartConfiguration } from "chart.js";
 
@@ -25,12 +30,13 @@ export default defineComponent({
 			chartConfig: {
 				type: "bar",
 				data: {
-					labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
+					labels: this.dataSets.map((dataSet: any) =>
+						dataSet._time.split("T")[1].split(".")[0].substring(3),
+					),
 					datasets: [
 						{
-							label: "# of Votes",
 							barThickness: 6,
-							data: [12, 19, 3, 5, 2, 3],
+							data: this.dataSets.map((dataSet: any) => dataSet._value),
 							borderRadius: 20,
 						},
 					],
@@ -41,10 +47,15 @@ export default defineComponent({
 							beginAtZero: true,
 						},
 					},
+					plugins: {
+						legend: {
+							display: false,
+						},
+					},
 				},
 			} as ChartConfiguration,
 			chartStyle: {
-				linearGradient: { firstColor: "red", secondColor: "blue" },
+				linearGradient: { firstColor: "#FF23CF", secondColor: "#824FED" },
 			},
 		};
 	},
