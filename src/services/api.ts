@@ -9,7 +9,7 @@ const api = ky.create({
 	},
 });
 
-const dataHandler = (res: Response) => res.json().then((r) => r.data);
+const dataHandler = (res: Response) => res.json().then((r) => r);
 
 export function LoginUser(email: string, password: string): Promise<UserInfo> {
 	return api
@@ -20,4 +20,8 @@ export function LoginUser(email: string, password: string): Promise<UserInfo> {
 			},
 		})
 		.then(dataHandler);
+}
+
+export function getRooms(): Promise<UserInfo> {
+	return api.get("room/getRooms").then(dataHandler);
 }

@@ -26,9 +26,12 @@ export default defineComponent({
 .brand {
 	display: flex;
 	align-items: center;
+	gap: 8px;
 
 	&__title {
 		font-family: "Chillax-Regular", sans-serif;
+		margin: 0;
+		font-size: 16px;
 		&--large {
 			font-size: 40px;
 		}

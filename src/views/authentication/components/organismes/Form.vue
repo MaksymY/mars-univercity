@@ -28,7 +28,6 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
-import { SingIn, UserInfo } from "@/services/types/auth";
 import { LoginUser } from "@/services/api";
 import Input from "../atoms/Input.vue";
 import Button from "@/components/atoms/Button.vue";
@@ -46,7 +45,7 @@ export default defineComponent({
 		const signIn = ref({
 			email: "",
 			password: "",
-		} as SingIn);
+		});
 		const updateEmail = (value: string) => (signIn.value.email = value);
 		const updatePassword = (value: string) => (signIn.value.password = value);
 
@@ -99,6 +98,7 @@ export default defineComponent({
 		color: white;
 		border: 2px solid rgba(255, 255, 255, 0.2);
 		margin-top: 32px;
+		padding: 8px 24px;
 	}
 
 	&__button-icon {
