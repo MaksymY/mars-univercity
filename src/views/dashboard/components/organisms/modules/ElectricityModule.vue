@@ -1,5 +1,10 @@
 <template>
-	<ModuleLayout label="Électricité" :chart-config="chartConfig" :custom-chart-style="chartStyle" />
+	<ModuleLayout
+		label="Électricité"
+		:chart-config="chartConfig"
+		:custom-chart-style="chartStyle"
+		icon="electricity-icon"
+	></ModuleLayout>
 </template>
 
 <script lang="ts">

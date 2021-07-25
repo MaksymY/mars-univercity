@@ -1,5 +1,10 @@
 <template>
-	<ModuleLayout label="Oxygène" :chart-config="chartConfig" :custom-chart-style="chartStyle" />
+	<ModuleLayout
+		label="Oxygène"
+		:chart-config="chartConfig"
+		:custom-chart-style="chartStyle"
+		icon="oxygen-icon"
+	/>
 </template>
 
 <script lang="ts">
