@@ -6,7 +6,7 @@
 			<span occupants-layer__table-header__identity>Identité</span>
 			<span occupants-layer__table-header__oxymetre>Oxymètre</span>
 		</div>
-		<OccupantStats v-for="occupant in occupantsInRoom" :key="occupant.name" :occupant="occupant" />
+		<OccupantStats v-for="occupant in occupants" :key="occupant.name" :occupant="occupant" />
 	</div>
 </template>
 
@@ -22,23 +22,18 @@ export default defineComponent({
 	components: {
 		OccupantStats,
 	},
-	computed: {
-		occupantsInRoom(): any {
-			//- This computed must be a prop
-			return [
-				{ name: "Maksym", oxymetreStats: "..." },
-				{ name: "Hugues", oxymetreStats: "..." },
-				{ name: "Louis", oxymetreStats: "..." },
-			];
-		},
+	data() {
+		return {
+			occupants: null,
+		};
 	},
 	created() {
 		this.getRoomOccupants();
 	},
 	methods: {
 		async getRoomOccupants() {
-			const roomOccupants = await getRoomUsers("321321");
-			console.log(roomOccupants);
+			const roomOccupants = await getRoomUsers("60f92af2a684bb691c61cc0a");
+			this.occupants = roomOccupants.usersWatchResult;
 		},
 	},
 });

@@ -33,7 +33,6 @@ export default defineComponent({
 					labels: ["13h", "13h30", "14h", "15h", "15h30", "16h"],
 					datasets: [
 						{
-							label: "# of Votes",
 							barThickness: 6,
 							data: [2700, 2800, 2100, 2540, 2600, 2230],
 							borderRadius: 20,
@@ -46,10 +45,15 @@ export default defineComponent({
 							beginAtZero: true,
 						},
 					},
+					plugins: {
+						legend: {
+							display: false,
+						},
+					},
 				},
 			} as ChartConfiguration,
 			chartStyle: {
-				linearGradient: { firstColor: "red", secondColor: "blue" },
+				linearGradient: { firstColor: "#4DFFDF", secondColor: "#4DA1FF" },
 			},
 		};
 	},

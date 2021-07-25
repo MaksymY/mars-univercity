@@ -55,7 +55,9 @@ export default defineComponent({
 		},
 	},
 	mounted(): void {
-		this.initChart();
+		if (this.chartConfig) {
+			this.initChart();
+		}
 	},
 	methods: {
 		initChart(): void {

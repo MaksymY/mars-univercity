@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
 
 import { ChartConfiguration } from "chart.js";
 
@@ -33,7 +33,6 @@ export default defineComponent({
 					labels: ["Red", "Blue", "Yellow", "Green", "Purple", "Orange"],
 					datasets: [
 						{
-							label: "# of Votes",
 							barThickness: 6,
 							data: [12, 19, 3, 5, 2, 3],
 							borderRadius: 20,
@@ -46,10 +45,15 @@ export default defineComponent({
 							beginAtZero: true,
 						},
 					},
+					plugins: {
+						legend: {
+							display: false,
+						},
+					},
 				},
 			} as ChartConfiguration,
 			chartStyle: {
-				linearGradient: { firstColor: "red", secondColor: "blue" },
+				linearGradient: { firstColor: "#FF23CF", secondColor: "#824FED" },
 			},
 		};
 	},
