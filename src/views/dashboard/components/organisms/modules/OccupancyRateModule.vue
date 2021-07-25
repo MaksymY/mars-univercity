@@ -5,10 +5,20 @@
 			<h3 class="module-layout__header__title">Taux d’occupation</h3>
 		</div>
 		<div class="donut-chart chart">
-			<div class="slice one"></div>
-			<div class="slice two"></div>
-			<div class="chart-center">
-				<span></span>
+			<div class="dunutGraph">
+				<p class="dunutGraphtext">10%</p>
+				<figure class="dunutGraphgraph">
+					<svg width="100%" height="100%" viewBox="0 0 42 42" class="dunutGraph__graph-donut">
+						<circle class="dunutGraphgraph-donut-segment" cx="21" cy="21" r="16"></circle>
+						<circle
+							class="dunutGraph__graph-donut-ring"
+							:style="{ strokeDashoffset: 0 }"
+							cx="21"
+							cy="21"
+							r="16"
+						></circle>
+					</svg>
+				</figure>
 			</div>
 		</div>
 	</div>
@@ -40,77 +50,48 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-@mixin donut-chart(
-	$name,
-	$perc,
-	$size,
-	$width,
-	$base,
-	$center,
-	$color,
-	$textColor: $color,
-	$textSize: 40px
-) {
-	$color2: $color;
-	$base2: $base;
-	$deg: ($perc/100 * 360) + deg;
-	$deg1: 90deg;
-	$deg2: $deg;
-
-	@if $perc < 50 {
-		$base: $color;
-		$color: $base2;
-		$color2: $base2;
-		$deg1: ($perc/100 * 360+90) + deg;
-		$deg2: 0deg;
-	}
-
-	.donut-chart {
-		&#{".chart"} {
-			width: $size;
-			height: $size;
-			background: $base;
-
-			.slice {
-				&.one {
-					clip: rect(0 $size $size/2 0);
-					-webkit-transform: rotate($deg1);
-					transform: rotate($deg1);
-					background: $color;
-					border-radius: 8px;
-				}
-
-				&.two {
-					clip: rect(0 $size/2 $size 0);
-					-webkit-transform: rotate($deg2);
-					transform: rotate($deg2);
-					background: $color2;
-					border-radius: 8px;
-				}
-			}
-
-			.chart-center {
-				top: $width;
-				left: $width;
-				width: $size - ($width * 2);
-				height: $size - ($width * 2);
-				background: $center;
-
-				span {
-					font-size: $textSize;
-					line-height: $size - ($width * 2);
-					color: $textColor;
-
-					&:after {
-						content: "#{$perc}%";
-					}
-				}
-			}
-		}
-	}
+.dunutGraphtext {
+	position: absolute;
+	top: 0;
+	bottom: 0;
 }
 
-@include donut-chart(".chart", 62, 200px, 10px, black, $BlackRussian, #50c690);
+.dunutGraph {
+	text-align: center;
+	width: 35%;
+	position: relative;
+
+	&__text {
+		font-size: 1.4em;
+		color: red;
+		top: 0;
+		bottom: 0;
+		position: absolute;
+	}
+
+	&__graph-donut {
+		width: 6em;
+		fill: none;
+		position: relative;
+	}
+	&__graph-donut-ring {
+		fill: transparent;
+		stroke: blue;
+		stroke-width: 3;
+		stroke-dasharray: 101;
+		stroke-dashoffset: 101;
+		transform-origin: center center;
+		transform: rotate(-90deg);
+		transition: linear 1s;
+		stroke-linecap: butt;
+	}
+
+	&__graph-donut-segment {
+		fill: transparent;
+		stroke: #ababab;
+		stroke-width: 3;
+	}
+}
 
 .module-layout {
 	background-color: $BlackRussian;
