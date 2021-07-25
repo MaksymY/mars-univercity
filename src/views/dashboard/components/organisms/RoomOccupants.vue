@@ -27,12 +27,17 @@ export default defineComponent({
 			occupants: null,
 		};
 	},
-	created() {
+	computed: {
+		roomId(): string {
+			return this.$route.params.roomId as string;
+		},
+	},
+	mounted() {
 		this.getRoomOccupants();
 	},
 	methods: {
 		async getRoomOccupants() {
-			const roomOccupants = await getRoomUsers("60f92af2a684bb691c61cc0a");
+			const roomOccupants = await getRoomUsers(this.roomId);
 			this.occupants = roomOccupants.usersWatchResult;
 		},
 	},
@@ -57,6 +62,12 @@ export default defineComponent({
 			&:last-child {
 				margin-left: auto;
 			}
+		}
+	}
+
+	&::v-deep {
+		.occupant:nth-child(odd) {
+			background-color: #17173e;
 		}
 	}
 }

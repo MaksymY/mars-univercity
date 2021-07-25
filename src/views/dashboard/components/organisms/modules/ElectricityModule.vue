@@ -4,7 +4,9 @@
 		:chart-config="chartConfig"
 		:custom-chart-style="chartStyle"
 		icon="electricity-icon"
-	></ModuleLayout>
+	>
+		<template #header-right-content> {{ dataSets[dataSets.length - 1]._value }} Watts </template>
+	</ModuleLayout>
 </template>
 
 <script lang="ts">

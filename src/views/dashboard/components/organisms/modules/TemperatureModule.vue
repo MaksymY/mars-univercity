@@ -1,10 +1,13 @@
 <template>
 	<ModuleLayout label="Temperature">
-		<div class="temperature-layout">
-			<div class="temperature-layout__circle">
-				<span>{{ dataSets[dataSets.length - 1]._value }}°C</span>
+		<template #header-right-content></template>
+		<template #content>
+			<div class="temperature-layout">
+				<div class="temperature-layout__circle">
+					<span>{{ dataSets[dataSets.length - 1]._value }}°C</span>
+				</div>
 			</div>
-		</div>
+		</template>
 	</ModuleLayout>
 </template>
 

@@ -4,7 +4,9 @@
 		:chart-config="chartConfig"
 		:custom-chart-style="chartStyle"
 		icon="oxygen-icon"
-	/>
+	>
+		<template #header-right-content> {{ dataSets[dataSets.length - 1]._value }} % </template>
+	</ModuleLayout>
 </template>
 
 <script lang="ts">

@@ -1,12 +1,16 @@
 <template>
-	<div class="dashboard">
+	<div v-if="roomDetails" class="dashboard">
 		<div class="dashboard__datas">
 			<router-link class="dashboard__datas__back-link" to="/"
 				>&#129044; Retour à la carte</router-link
 			>
-			<div></div>
-			<h1>Le nom de la salle</h1>
-			<div class="dashboard__datas__charts">
+			<img
+				class="dashboard__datas__illustration"
+				:src="roomDetails.img_url"
+				alt="Image de la salle"
+			/>
+			<h1 class="dashboard__datas__title">{{ roomDetails.label }}</h1>
+			<div v-if="roomSensorsData" class="dashboard__datas__charts">
 				<OccupancyRateModule class="dashboard__datas__charts__occupancy"></OccupancyRateModule>
 				<ElectricityModule
 					class="dashboard__datas__charts__electricity"
@@ -44,7 +48,9 @@ import TemperatureModule from "./components/organisms/modules/TemperatureModule.
 
 import RoomOccupants from "./components/organisms/RoomOccupants.vue"
 
-import { getRoomSensorsData } from "@/services/api";
+import { getRoomSensorsData, getRoomDetails } from "@/services/api";
+
+
 
 export default defineComponent({
 	name: "Dashboard",
@@ -58,15 +64,26 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			roomSensorsData: null
+			roomSensorsData: null,
+			roomDetails: null,
 		};
 	},
-	mounted() {
-		this.getRoomSensorsData();
+	computed: {
+		roomId() {
+			return this.$route.params.roomId
+		}
+	},
+	async mounted() {
+		await this.getRoomData()
+		this.getRoomSensorsData(this.roomDetails.node_id);
 	},
 	methods: {
-		async getRoomSensorsData() {
-			const data = await getRoomSensorsData("951951");
+		async getRoomData() {
+			const data = await getRoomDetails(this.roomId)
+			this.roomDetails = data.room
+		},
+		async getRoomSensorsData(nodeId) {
+			const data = await getRoomSensorsData(nodeId);
 			const dataMappedByMeasurement = {}
 			for (const sensorData of data.roomData) {
 				if (sensorData._measurement in dataMappedByMeasurement) {
@@ -75,8 +92,6 @@ export default defineComponent({
 				else dataMappedByMeasurement[sensorData._measurement] = [sensorData]
 			}
 			this.roomSensorsData =  dataMappedByMeasurement
-
-			console.log(data, "roomStats");
 		},
 	}
 });
@@ -93,7 +108,7 @@ export default defineComponent({
 		width: 70%;
 		display: flex;
 		flex-direction: column;
-		justify-content: flex-end;
+		justify-content: space-between;
 
 		&__back-link {
 			color: $white;
@@ -102,6 +117,17 @@ export default defineComponent({
 			&:hover {
 				font-weight: bold;
 			}
+		}
+
+		&__illustration {
+			align-self: center;
+		}
+
+		&__title {
+			text-align: center;
+			font-size: 24px;
+			font-weight: normal;
+			text-transform: uppercase;
 		}
 
 		&__charts {

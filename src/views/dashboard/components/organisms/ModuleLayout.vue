@@ -3,9 +3,12 @@
 		<div class="module-layout__header">
 			<Icon class="module-layout__header__icon" :href="icon || 'bulb-icon'" />
 			<h3 class="module-layout__header__title">{{ label }}</h3>
+			<div class="module-layout__header__infos">
+				<slot name="header-right-content"></slot>
+			</div>
 		</div>
 		<canvas v-if="chartConfig" :id="`${label}-canvas`"></canvas>
-		<slot />
+		<slot name="content" />
 	</div>
 </template>
 
@@ -123,6 +126,10 @@ export default defineComponent({
 
 		&__title {
 			font-size: 16px;
+		}
+
+		&__infos {
+			margin-left: auto;
 		}
 	}
 
