@@ -2,7 +2,7 @@
 	<ModuleLayout label="Temperature">
 		<div class="temperature-layout">
 			<div class="temperature-layout__circle">
-				<span>23 deg</span>
+				<span>{{ dataSets[dataSets.length - 1]._value }}°C</span>
 			</div>
 		</div>
 	</ModuleLayout>

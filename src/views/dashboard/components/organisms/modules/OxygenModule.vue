@@ -30,11 +30,13 @@ export default defineComponent({
 			chartConfig: {
 				type: "bar",
 				data: {
-					labels: ["13h", "13h30", "14h", "15h", "15h30", "16h"],
+					labels: this.dataSets.map((dataSet: any) =>
+						dataSet._time.split("T")[1].split(".")[0].substring(3),
+					),
 					datasets: [
 						{
 							barThickness: 6,
-							data: [2700, 2800, 2100, 2540, 2600, 2230],
+							data: this.dataSets.map((dataSet: any) => dataSet._value),
 							borderRadius: 20,
 						},
 					],

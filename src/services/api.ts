@@ -34,3 +34,7 @@ export function LoginUser(email: string, password: string): Promise<UserInfo | v
 export function getRoomUsers(room_id: string): Promise<any> {
 	return api.post(`sensor/getAllUserRoomWatchData`, { json: { room_id } }).then(dataHandler);
 }
+
+export function getRoomSensorsData(room_node_id: string): Promise<any> {
+	return api.post(`sensor/getRoomData`, { json: { room_node_id } }).then(dataHandler);
+}
