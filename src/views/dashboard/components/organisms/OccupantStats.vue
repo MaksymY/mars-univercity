@@ -15,6 +15,8 @@ import { Chart, registerables, ChartConfiguration } from "chart.js";
 
 Chart.register(...registerables);
 
+import { formatDate } from "@/Utils/DateFormatter";
+
 export default defineComponent({
 	name: "OccupantStats",
 	props: {
@@ -28,9 +30,7 @@ export default defineComponent({
 			chartConfig: {
 				type: "line",
 				data: {
-					labels: this.occupant.oxymetre_values.map((v: any) =>
-						v.time.split("T")[1].split(".")[0].substring(3),
-					),
+					labels: this.occupant.oxymetre_values.map((v: any) => formatDate(v.time)),
 					datasets: [
 						{
 							data: this.occupant.oxymetre_values.map((v: any) => v.value),

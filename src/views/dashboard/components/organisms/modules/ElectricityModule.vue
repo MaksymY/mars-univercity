@@ -16,6 +16,8 @@ import { ChartConfiguration } from "chart.js";
 
 import ModuleLayout from "../ModuleLayout.vue";
 
+import { formatDate } from "@/Utils/DateFormatter";
+
 export default defineComponent({
 	name: "ElectricityModule",
 	components: {
@@ -32,9 +34,7 @@ export default defineComponent({
 			chartConfig: {
 				type: "bar",
 				data: {
-					labels: this.dataSets.map((dataSet: any) =>
-						dataSet._time.split("T")[1].split(".")[0].substring(3),
-					),
+					labels: this.dataSets.map((dataSet: any) => formatDate(dataSet._time)),
 					datasets: [
 						{
 							barThickness: 6,

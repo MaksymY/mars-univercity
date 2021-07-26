@@ -37,8 +37,6 @@
 <script lang="js">
 import { defineComponent } from "vue";
 
-import OccupancyRate from "@/Utils/ChartsConfigs/OccupancyRate";
-
 // Metrics modules imports
 import ElectricityModule from "./components/organisms/modules/ElectricityModule.vue"
 import OccupancyRateModule from "./components/organisms/modules/OccupancyRateModule.vue"
@@ -76,6 +74,9 @@ export default defineComponent({
 	async mounted() {
 		await this.getRoomData()
 		this.getRoomSensorsData(this.roomDetails.node_id);
+		setInterval(() => {
+			this.getRoomSensorsData(this.roomDetails.node_id);
+		}, 60000 * 15);
 	},
 	methods: {
 		async getRoomData() {
@@ -87,7 +88,7 @@ export default defineComponent({
 			const dataMappedByMeasurement = {}
 			for (const sensorData of data.roomData) {
 				if (sensorData._measurement in dataMappedByMeasurement) {
-					dataMappedByMeasurement[sensorData._measurement].push(sensorData)
+					dataMappedByMeasurement[sensorData._measurement].unshift(sensorData)
 				}
 				else dataMappedByMeasurement[sensorData._measurement] = [sensorData]
 			}
@@ -131,12 +132,12 @@ export default defineComponent({
 		}
 
 		&__charts {
-			height: 80%;
+			height: 70%;
 			display: grid;
 			grid-template:
-				"a a b b b b" 10%
-				"a a c c d d" 46%
-				"e e e f f f" 36% / 1fr 1fr 1fr 1fr 1fr 1fr;
+				"a a b b b b" 15%
+				"a a c c d d" 40%
+				"e e e f f f" 42% / 1fr 1fr 1fr 1fr 1fr 1fr;
 
 			grid-gap: 2%;
 
