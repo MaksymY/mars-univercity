@@ -22,7 +22,7 @@ import Icon from "@/components/atoms/Icon.vue";
 Chart.register(...registerables);
 
 export default defineComponent({
-	name: "Authentification",
+	name: "ModuleLayout",
 	components: {
 		Icon,
 	},
@@ -129,6 +129,8 @@ export default defineComponent({
 
 		&__infos {
 			margin-left: auto;
+			font-size: 16px;
+			font-weight: bold;
 		}
 	}
 

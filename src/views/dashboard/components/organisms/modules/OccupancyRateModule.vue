@@ -1,5 +1,5 @@
 <template>
-	<ModuleLayout label="Taux d'occupation">
+	<ModuleLayout label="Taux d'occupation" icon="oxygen-icon">
 		<template #content>
 			<div class="occurancy">
 				<div class="donut">
@@ -20,13 +20,15 @@
 							</figure>
 						</div>
 					</div>
-					<p>32/50 perso</p>
+					<p>32/{{ occupancyData.occupancyData }} pers.</p>
 				</div>
 				<div class="occurence__handler">
 					<p>nombre de personne max.</p>
 					<p>50</p>
-					<button class="button">-</button>
-					<button class="button">+</button>
+					<div class="occurence_buttons">
+						<button class="occurence__button">-</button>
+						<button class="occurence__button">+</button>
+					</div>
 				</div>
 			</div>
 		</template>
@@ -46,6 +48,10 @@ export default defineComponent({
 			type: Object,
 			required: true,
 		},
+		occupancyData: {
+			type: Number,
+			required: true,
+		},
 	},
 	data: function () {
 		return {
@@ -59,13 +65,36 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.button {
+.occurancy {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.occurence_buttons {
+	margin-top: $xs;
+}
+
+.occurence__handler {
+	display: flex;
+	align-content: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.occurence__button {
 	border-radius: 8px;
-	padding: 10px 27px;
-	background-color: $BackgroundBlue;
-	color: $LightBlue;
+	background-color: $LightBlue;
+	color: $LighterBlue;
 	font-size: 14px;
-	border: 2px solid $BackgroundBlue;
+	border: 2px solid $LightBlue;
+	width: 50px;
+	height: 50px;
+	&:hover {
+		border: 2px solid white;
+		color: white;
+		cursor: pointer;
+	}
 }
 
 .dunutGraphtext {
