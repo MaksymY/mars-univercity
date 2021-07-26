@@ -11,7 +11,7 @@
 									<circle class="dunutGraphgraph-donut-segment" cx="21" cy="21" r="16"></circle>
 									<circle
 										class="dunutGraph__graph-donut-ring"
-										:style="{ strokeDashoffset: calcPercentage }"
+										:style="{ strokeDashoffset: calcPercentage - 101 }"
 										cx="21"
 										cy="21"
 										r="16"
