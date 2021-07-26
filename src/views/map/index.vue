@@ -3,9 +3,31 @@
 		<MainLayout>
 			<div class="map__wrapper">
 				<div class="map__main">
-					<LeftMap class="map__main-left" />
-					<CenterMap class="map__main-center" />
-					<RightMap class="map__main-right" />
+					<LeftMap
+						:selectInfo="roomInfo ? true : false"
+						:leftRooms="roomLeft"
+						class="map__main-left"
+						@open-info="openInfo"
+					/>
+					<CenterMap :centerRooms="roomCenter" class="map__main-center" @open-info="openInfo" />
+					<RightMap
+						:selectInfo="roomInfo ? true : false"
+						:rightRooms="roomRight"
+						class="map__main-right"
+						@open-info="openInfo"
+					/>
+				</div>
+				<div v-if="roomInfo" class="map__infos">
+					<Icon class="map__infos-close" href="cross" @click="roomInfo = null" />
+					<img class="map__infos-img" :src="roomInfo.img_url" />
+					<p class="map__infos-title">{{ roomInfo.label }}</p>
+					<p
+						class="map__status"
+						:class="roomInfo.locked ? 'map__status--close' : 'map__status--open'"
+					>
+						{{ roomInfo.locked ? "Vérouillé" : "Déverouillée" }}
+					</p>
+					<Button class="map__button" :text="'Configurer'" />
 				</div>
 			</div>
 		</MainLayout>
@@ -14,7 +36,10 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-/* import { getRooms } from "@/services/api"; */
+import { getRooms } from "@/services/api";
+import { Rooms } from "@/services/types/map";
+import Button from "@/components/atoms/Button.vue";
+import Icon from "@/components/atoms/Icon.vue";
 import MainLayout from "@/layouts/MainLayout.vue";
 import RightMap from "./components/organismes/RightMap.vue";
 import LeftMap from "./components/organismes/LeftMap.vue";
@@ -27,14 +52,55 @@ export default defineComponent({
 		RightMap,
 		LeftMap,
 		CenterMap,
+		Button,
+		Icon,
 	},
-	/* async setup() {
-		const Rooms = await getRooms();
-
+	data() {
 		return {
-			Rooms,
+			roomInfo: null,
+			rooms: null,
+			roomLeft: null,
+			roomRight: null,
+			roomCenter: null,
 		};
-	}, */
+	},
+	async mounted() {
+		await this.getRoomData();
+	},
+	methods: {
+		getRoomData() {
+			getRooms().then((data) => {
+				this.rooms = data.roomMap;
+				this.roomLeft = data.roomMap.filter((r: any) =>
+					["Salle Olympus", "Salle Matara", "Salle Elysium", "Salle Syrtis Major"].includes(
+						r.label,
+					),
+				);
+				this.roomRight = data.roomMap.filter((r: any) =>
+					[
+						"Salle Amazonis Planitia",
+						"Salle Noachis Terra",
+						"Salle Mansae",
+						"Salle Aoelis",
+					].includes(r.label),
+				);
+				this.roomCenter = data.roomMap.filter((r: any) =>
+					[
+						"Toilette H",
+						"Hall",
+						"Toilette F",
+						"Salle Elysium",
+						"Infirmerie",
+						"Administration",
+						"Salle des Profs",
+					].includes(r.label),
+				);
+			});
+		},
+		openInfo(value: any) {
+			this.roomInfo = value.room;
+		},
+	},
 });
 </script>
 
@@ -44,6 +110,9 @@ export default defineComponent({
 
 	&__wrapper {
 		align-self: center;
+		display: flex;
+		justify-content: center;
+		gap: 40px;
 	}
 
 	&__main {
@@ -70,6 +139,45 @@ export default defineComponent({
 	}
 	&__center-midle {
 		display: flex;
+	}
+	&__infos {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		background-color: $Pau;
+		border-radius: 10px;
+		width: 300px;
+	}
+	&__infos-close {
+		width: 16px;
+		height: 16px;
+		margin: 24px 24px 0 auto;
+	}
+	&__infos-title {
+		margin: 16px 0 0 0;
+	}
+	&__infos-img {
+		height: 64px;
+		width: 64px;
+	}
+	&__status {
+		font-size: 14px;
+		margin: 8px 0 0 0;
+		&--open {
+			color: $Green;
+		}
+		&--close {
+			color: $Red;
+		}
+	}
+	&__button {
+		background-color: $Ruby;
+		color: white;
+		border: 2px solid rgba(255, 255, 255, 0.2);
+		margin-top: 32px;
+		padding: 8px 24px;
+		font-size: 14px;
 	}
 }
 </style>

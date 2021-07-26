@@ -23,6 +23,10 @@ export default defineComponent({
 			required: true,
 			default: "",
 		},
+		status: {
+			type: Boolean,
+			required: true,
+		},
 	},
 });
 </script>

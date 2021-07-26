@@ -1,15 +1,15 @@
 <template>
-	<div class="door" :class="`door--${stetus}`"></div>
+	<div class="door" :class="`door--${status ? 'close' : 'open'}`"></div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from "vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
 	name: "Door",
 	props: {
 		status: {
-			type: String as PropType<"close" | "open">,
+			type: Boolean,
 			required: true,
 		},
 	},

@@ -1,15 +1,15 @@
 <template>
 	<div class="centerMap">
 		<div class="centerMap__top">
-			<CenterRoom room="Salle Olympus" />
-			<CenterRoom room="Salle Olympus" />
-			<CenterRoom room="Salle Olympus" />
+			<CenterRoom room="Toilettes H" :status="getKeyByValue('Toilettes H')" />
+			<CenterRoom room="Infirmerie" />
+			<CenterRoom room="Toilettes F" />
 		</div>
 		<div class="centerMap__middle">
 			<CenterRoom class="centerMap__middle-professor" room="Salle prof" />
 			<CenterRoom room="Salle Olympus" />
 		</div>
-		<CenterHallRoom room="Salle Olympus" />
+		<CenterHallRoom room="Hall" />
 	</div>
 </template>
 
@@ -23,6 +23,20 @@ export default defineComponent({
 	components: {
 		CenterRoom,
 		CenterHallRoom,
+	},
+	props: {
+		centerRooms: {
+			type: Object,
+			required: false,
+		},
+	},
+	methods: {
+		getKeyByValue(value: string) {
+			this.centerRooms?.find((obj: any) => {
+				console.log(obj.label);
+				return obj.label === value;
+			});
+		},
 	},
 });
 </script>

@@ -1,8 +1,8 @@
 <template>
-	<div class="leftRoom">
+	<div class="leftRoom" :class="{ 'leftRoom--select': select }">
 		<Icon class="leftRoom__icon" href="right-room" />
 		<p class="leftRoom__name">{{ room }}</p>
-		<Door class="leftRoom__door" :status="open" />
+		<Door class="leftRoom__door" :status="status" />
 	</div>
 </template>
 
@@ -23,6 +23,14 @@ export default defineComponent({
 			required: true,
 			default: "",
 		},
+		select: {
+			type: Boolean,
+			rrequired: false,
+		},
+		status: {
+			type: Boolean,
+			rrequired: false,
+		},
 	},
 });
 </script>
@@ -38,6 +46,10 @@ export default defineComponent({
 	border-radius: 36px;
 	background-color: $BlackRussian;
 	position: relative;
+
+	&--select {
+		background-color: rgba(103, 118, 255, 0.74);
+	}
 
 	&__name {
 		color: $LavederBlue;
