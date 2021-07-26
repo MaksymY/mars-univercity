@@ -1,36 +1,36 @@
 <template>
-	<div class="module-layout">
-		<div class="module-layout__header">
-			<Icon class="module-layout__header__icon" href="people-square-icon" />
-			<h3 class="module-layout__header__title">Taux d’occupation</h3>
-		</div>
-		<div class="donut-chart chart">
-			<div class="dunutGraph">
-				<p class="dunutGraphtext">10%</p>
-				<figure class="dunutGraphgraph">
-					<svg width="100%" height="100%" viewBox="0 0 42 42" class="dunutGraph__graph-donut">
-						<circle class="dunutGraphgraph-donut-segment" cx="21" cy="21" r="16"></circle>
-						<circle
-							class="dunutGraph__graph-donut-ring"
-							:style="{ strokeDashoffset: 0 }"
-							cx="21"
-							cy="21"
-							r="16"
-						></circle>
-					</svg>
-				</figure>
+	<ModuleLayout label="Taux d'occupation">
+		<div class="occurancy">
+			<div class="donut">
+				<div class="donut-chart chart">
+					<div class="dunutGraph">
+						<p class="dunutGraphtext">10%</p>
+						<figure class="dunutGraphgraph">
+							<svg width="100%" height="100%" viewBox="0 0 42 42" class="dunutGraph__graph-donut">
+								<circle class="dunutGraphgraph-donut-segment" cx="21" cy="21" r="16"></circle>
+								<circle
+									class="dunutGraph__graph-donut-ring"
+									:style="{ strokeDashoffset: 0 }"
+									cx="21"
+									cy="21"
+									r="16"
+								></circle>
+							</svg>
+						</figure>
+					</div>
+				</div>
 			</div>
 		</div>
-	</div>
+	</ModuleLayout>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import Icon from "@/components/atoms/Icon.vue";
+import ModuleLayout from "../ModuleLayout.vue";
 export default defineComponent({
 	name: "OccupancyRateModule",
 	components: {
-		Icon,
+		ModuleLayout,
 	},
 	props: {
 		dataSets: {
@@ -50,17 +50,21 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
+.occurancy {
+	display: flex;
+	justify-content: center;
+}
+
 .dunutGraphtext {
 	position: absolute;
-	top: 0;
-	bottom: 0;
+	transform: translateY(36px) translateX(85px);
+	color: $purple;
 }
 
 .dunutGraph {
 	text-align: center;
 	width: 35%;
 	position: relative;
-
 	&__text {
 		font-size: 1.4em;
 		color: red;
@@ -76,7 +80,7 @@ export default defineComponent({
 	}
 	&__graph-donut-ring {
 		fill: transparent;
-		stroke: blue;
+		stroke: $purple;
 		stroke-width: 3;
 		stroke-dasharray: 101;
 		stroke-dashoffset: 101;

@@ -74,7 +74,6 @@ export default defineComponent({
 		// @TODO fix types here
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
 		getChartCustomStyle(ctx: HTMLCanvasElement): any {
-			console.log(this.canvasDimensions);
 			if (!this.customChartStyle) {
 				return {};
 			}
@@ -122,7 +121,7 @@ export default defineComponent({
 		}
 
 		&__title {
-			font-size: 16px;
+			font-size: 21px;
 		}
 	}
 

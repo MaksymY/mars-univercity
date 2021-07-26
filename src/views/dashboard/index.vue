@@ -1,5 +1,5 @@
 <template>
-	<div class="dashboard">
+	<div v-if="roomSensorsData" class="dashboard">
 		<div class="dashboard__datas">
 			<router-link class="dashboard__datas__back-link" to="/"
 				>&#129044; Retour à la carte</router-link
@@ -76,7 +76,6 @@ export default defineComponent({
 			}
 			this.roomSensorsData =  dataMappedByMeasurement
 
-			console.log(data, "roomStats");
 		},
 	}
 });

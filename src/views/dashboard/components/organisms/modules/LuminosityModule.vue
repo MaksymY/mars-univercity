@@ -1,5 +1,13 @@
 <template>
-	<ModuleLayout label="Luminosité" />
+	<ModuleLayout label="Luminosité">
+		<div class="luminosity">
+			<img class="luminosity__image" :src="getImagePath" />
+			<p class="luminosity__text">
+				{{ dataSets[5]._value }} Lx
+				<span class="luminosity__text__status">{{ GetLuminosityStatus }}</span>
+			</p>
+		</div>
+	</ModuleLayout>
 </template>
 
 <script lang="ts">
@@ -18,5 +26,47 @@ export default defineComponent({
 			required: true,
 		},
 	},
+	computed: {
+		GetLuminosityStatus() {
+			const luminosityValue = this.dataSets[5].value;
+			switch (true) {
+				case luminosityValue < 50:
+					return "Noir";
+				case luminosityValue > 50 && luminosityValue < 100:
+					return "Très-sombre";
+				case luminosityValue > 100 && luminosityValue < 200:
+					return "Sombre";
+				case luminosityValue > 200 && luminosityValue < 1000:
+					return "Moyen";
+				case luminosityValue > 1000 && luminosityValue < 5000:
+					return "Lumineux";
+				case luminosityValue > 5000 && luminosityValue < 10000:
+					return "Très-lumineux";
+			}
+			return "Moyen";
+		},
+		getImagePath() {
+			return require(`../luminosity/img/${this.GetLuminosityStatus}.png`);
+		},
+	},
 });
 </script>
+
+<style lang="scss">
+.luminosity {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
+
+	&__image {
+		width: 300px;
+	}
+
+	&__text {
+		&__status {
+			color: $LightBlue;
+		}
+	}
+}
+</style>
