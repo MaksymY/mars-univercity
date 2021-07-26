@@ -4,8 +4,22 @@
 		:chart-config="chartConfig"
 		:custom-chart-style="chartStyle"
 		icon="oxygen-icon"
+		:values="dataSets.map((dataSet) => dataSet._value)"
+		:danger-value="dangerValue"
 	>
-		<template #header-right-content> {{ dataSets[dataSets.length - 1]._value }} % </template>
+		<template #header-right-content>
+			<div
+				:class="[
+					'header-value',
+					{ danger: dataSets[dataSets.length - 1]._value < chartStyle.dangerValue },
+				]"
+			>
+				<span v-if="dataSets[dataSets.length - 1]._value < chartStyle.dangerValue"
+					>Taux d'oxygène insufisant
+				</span>
+				<span>{{ dataSets[dataSets.length - 1]._value }} %</span>
+			</div>
+		</template>
 	</ModuleLayout>
 </template>
 
@@ -59,7 +73,16 @@ export default defineComponent({
 			chartStyle: {
 				linearGradient: { firstColor: "#4DFFDF", secondColor: "#4DA1FF" },
 			},
+			dangerValue: 20,
 		};
 	},
 });
 </script>
+
+<style lang="scss" scoped>
+.header-value {
+	&.danger {
+		color: red;
+	}
+}
+</style>

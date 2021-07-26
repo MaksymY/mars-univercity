@@ -57,15 +57,19 @@ export default defineComponent({
 <style lang="scss">
 .luminosity {
 	display: flex;
-	justify-content: center;
 	align-items: center;
 	flex-direction: column;
+	position: relative;
 
 	&__image {
-		width: 200px;
+		max-width: 70%;
+		max-height: 50%;
 	}
 
 	&__text {
+		font-size: 14px;
+		font-weight: bold;
+		margin: 0;
 		&__status {
 			color: $LightBlue;
 		}

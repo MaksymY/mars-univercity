@@ -4,6 +4,7 @@
 		:chart-config="chartConfig"
 		:custom-chart-style="chartStyle"
 		icon="electricity-icon"
+		:values="dataSets.map((dataSet) => dataSet._value)"
 	>
 		<template #header-right-content> {{ dataSets[dataSets.length - 1]._value }} Watts </template>
 	</ModuleLayout>

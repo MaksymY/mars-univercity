@@ -25,6 +25,7 @@ export default defineComponent({
 	data() {
 		return {
 			occupants: null,
+			occupantsReloader: null as any,
 		};
 	},
 	computed: {
@@ -34,6 +35,14 @@ export default defineComponent({
 	},
 	mounted() {
 		this.getRoomOccupants();
+		this.occupantsReloader = setInterval(() => {
+			this.getRoomOccupants();
+		}, 15000);
+	},
+	beforeUnmount: function () {
+		if (this.occupantsReloader) {
+			this.occupantsReloader.clearTimeout();
+		}
 	},
 	methods: {
 		async getRoomOccupants() {

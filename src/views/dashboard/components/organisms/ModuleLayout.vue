@@ -43,6 +43,14 @@ export default defineComponent({
 			type: String,
 			required: true,
 		},
+		values: {
+			type: Array,
+			default: () => [],
+		},
+		dangerValue: {
+			type: Number,
+			default: -3,
+		},
 	},
 	computed: {
 		canvasDimensions() {
@@ -82,7 +90,8 @@ export default defineComponent({
 			}
 			const twoDimensionsCtx = ctx.getContext("2d");
 			if (this.customChartStyle.linearGradient) {
-				let linearGradient;
+				let linearGradient: any;
+				let dangerGradient: any;
 				if (twoDimensionsCtx) {
 					linearGradient = twoDimensionsCtx.createLinearGradient(
 						0,
@@ -92,8 +101,24 @@ export default defineComponent({
 					);
 					linearGradient.addColorStop(0, this.customChartStyle.linearGradient.firstColor);
 					linearGradient.addColorStop(1, this.customChartStyle.linearGradient.secondColor);
+
+					dangerGradient = twoDimensionsCtx.createLinearGradient(
+						0,
+						0,
+						0,
+						(twoDimensionsCtx.canvas.height * 2) / 2,
+					);
+					dangerGradient.addColorStop(0, "red");
+					dangerGradient.addColorStop(1, "orange");
 				}
-				return { backgroundColor: linearGradient };
+
+				const rightGradients = this.values.map((value: any) => {
+					return value < this.dangerValue ? dangerGradient : linearGradient;
+				});
+				console.log(rightGradients);
+				return {
+					backgroundColor: rightGradients,
+				};
 			}
 			return {};
 		},
