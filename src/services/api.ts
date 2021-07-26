@@ -38,3 +38,7 @@ export function getRoomUsers(room_id: string): Promise<any> {
 export function getRoomSensorsData(room_node_id: string): Promise<any> {
 	return api.post(`sensor/getRoomData`, { json: { room_node_id } }).then(dataHandler);
 }
+
+export function getRoomDetails(roomId: string): Promise<any> {
+	return api.get(`room/getRoomDetails/${roomId}`).then(dataHandler);
+}
