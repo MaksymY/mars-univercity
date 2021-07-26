@@ -28,7 +28,7 @@
 <script lang="ts">
 import { defineComponent, ref } from "vue";
 import { useRouter } from "vue-router";
-import { SingIn, UserInfo } from "@/services/types/auth";
+import { SingIn } from "@/services/types/auth";
 import { LoginUser } from "@/services/api";
 import Input from "../atoms/Input.vue";
 import Button from "@/components/atoms/Button.vue";

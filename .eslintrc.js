@@ -18,7 +18,6 @@ module.exports = {
 		ecmaVersion: 2020,
 	},
 	rules: {
-		indent: ["error", "tab"],
 		"no-tabs": [
 			"error",
 			{

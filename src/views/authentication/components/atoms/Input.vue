@@ -58,8 +58,9 @@ export default defineComponent({
 	}
 	&__input {
 		border-radius: 10px;
-		padding: 16px;
+		padding: 18px;
 		font-size: 14px;
+		border: 2px solid $MaidiumGray;
 	}
 }
 </style>

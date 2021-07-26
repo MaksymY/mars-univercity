@@ -9,6 +9,7 @@
 import { defineComponent } from "vue";
 import Welcome from "./components/organismes/Welcome.vue";
 import Form from "./components/organismes/Form.vue";
+
 export default defineComponent({
 	name: "Authentification",
 	components: {
