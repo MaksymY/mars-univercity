@@ -26,7 +26,7 @@
 					<p>nombre de personne max.</p>
 					<p>{{ occupancyData.capacity }}</p>
 					<div class="occurence_buttons">
-						<button class="occurence__button" @click="changeCapacityOccurancy">-</button>
+						<button class="occurence__button" @click="changeCapacityOccurancy('10')">-</button>
 						<button class="occurence__button">+</button>
 					</div>
 				</div>
@@ -55,8 +55,11 @@ export default defineComponent({
 			required: true,
 		},
 	},
+	emits: ["capacity-changed"],
 	data: function () {
 		return {
+			timeOutRef: null as any,
+			newValue: null as any,
 			styleObject: {
 				color: "red",
 				fontSize: "13px",
@@ -69,8 +72,19 @@ export default defineComponent({
 		},
 	},
 	methods: {
-		changeCapacityOccurancy(capacity: string) {
-			updateRoomCapacity(this.occupancyData._id, capacity);
+		async changeCapacityOccurancy(capacity: string) {
+			await updateRoomCapacity(this.occupancyData._id, capacity);
+			this.$emit("capacity-changed");
+		},
+		debounce() {
+			let value = parseInt(this.occupancyData.capacity);
+			this.newValue = value++;
+			if (this.timeOutRef !== null) {
+				clearTimeout(this.timeOutRef);
+			}
+			this.$data.timeOutRef = setTimeout(() => {
+				console.log(this.newValue);
+			}, 800);
 		},
 	},
 });

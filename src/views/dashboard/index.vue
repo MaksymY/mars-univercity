@@ -15,29 +15,25 @@
 				<OccupancyRateModule
 					:occupancy-data="roomDetails"
 					class="dashboard__datas__charts__occupancy"
+					@capacity-changed="getRoomData"
 				></OccupancyRateModule>
 				<div class="dashboard__datas__charts__door-management">
 					<span>Verrouillage de la porte</span>
 					<div class="toggles">
 						<Toggle
 							class="toogles-item"
-							text="Auto"
-							:is-active="doorState === 1"
-							active-color="white"
-							@toggle-clicked="toggleDoorState(1)"
-						></Toggle>
-						<Toggle
-							class="toogles-item"
 							text="Déverouillée"
-							:is-active="doorState === 2"
+							:is-active="roomSensorsData.locked ? false : true"
 							active-color="green"
+							@click="updateRoomLocked(roomId, false)"
 							@toggle-clicked="toggleDoorState(2)"
 						></Toggle>
 						<Toggle
 							class="toogles-item"
 							text="Verouillée"
-							:is-active="doorState === 3"
+							:is-active="roomSensorsData.locked ? true : false"
 							active-color="red"
+							@click="locked()"
 							@toggle-clicked="toggleDoorState(3)"
 						></Toggle>
 					</div>
@@ -76,10 +72,9 @@ import TemperatureModule from "./components/organisms/modules/TemperatureModule.
 
 import RoomOccupants from "./components/organisms/RoomOccupants.vue"
 
-import { getRoomSensorsData, getRoomDetails } from "@/services/api";
+import { getRoomSensorsData, getRoomDetails, updateRoomLocked } from "@/services/api";
 
 import Toggle from "@/components/atoms/Toggle.vue"
-
 
 export default defineComponent({
 	name: "Dashboard",
@@ -96,7 +91,7 @@ export default defineComponent({
 		return {
 			roomSensorsData: null,
 			roomDetails: null,
-			doorState: 1 //- Door can have 1, 2 or 3
+			doorState: 3 //- Door can have 1, 2 or 3
 		};
 	},
 	computed: {
@@ -129,6 +124,12 @@ export default defineComponent({
 		},
 		toggleDoorState(state) {
 			this.doorState = state
+		},
+		locked() {
+			updateRoomLocked(this.roomId, true)
+		},
+		unlocked(){
+			updateRoomLocked(this.roomId, false)
 		}
 	}
 });
