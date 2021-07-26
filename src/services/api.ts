@@ -1,6 +1,8 @@
 import ky from "ky";
 import { UserInfo } from "@/services/types/auth";
 
+import Cookies from "js-cookie";
+
 const api = ky.create({
 	prefixUrl: "https://api-mars-university.herokuapp.com/",
 	timeout: 30000,
@@ -26,6 +28,10 @@ export function LoginUser(email: string, password: string): Promise<UserInfo | v
 				return data;
 			});
 		});
+}
+
+export function getRooms(): Promise<any> {
+	return api.get("room/getRooms").then(dataHandler);
 }
 
 export function getRoomUsers(room_id: string): Promise<any> {
