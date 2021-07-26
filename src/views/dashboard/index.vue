@@ -23,19 +23,18 @@
 						<Toggle
 							class="toogles-item"
 							text="Déverouillée"
-							:is-active="roomSensorsData.locked ? false : true"
+							:is-active="!roomDetails.locked ? true : false"
 							active-color="green"
-							@click="unlocked()"
-							@toggle-clicked="toggleDoorState(2)"
+							@toggle-clicked="roomDetails.locked ? changeRoomStatus() : null"
 							@locked-door="roomDetails"
 						></Toggle>
 						<Toggle
 							class="toogles-item"
 							text="Verouillée"
-							:is-active="roomSensorsData.locked ? true : false"
+							:is-active="roomDetails.locked ? true : false"
 							active-color="red"
-							@click="locked()"
-							@toggle-clicked="toggleDoorState(3)"
+							@click="!roomDetails.locked ? changeRoomStatus() : null"
+							@locked-door="roomDetails"
 						></Toggle>
 					</div>
 				</div>
@@ -124,17 +123,10 @@ export default defineComponent({
 			}
 			this.roomSensorsData =  dataMappedByMeasurement
 		},
-		toggleDoorState(state) {
-			this.doorState = state
+		async changeRoomStatus() {
+			 await updateRoomLocked(this.roomId);
+			 this.getRoomData()
 		},
-		async locked() {
-			await updateRoomLocked(this.roomId, true);
-			this.$emit("locked-door");
-		},
-		async unlocked(){
-			await updateRoomLocked(this.roomId, false)
-			this.$emit("locked-door");
-		}
 	}
 });
 </script>

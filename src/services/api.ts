@@ -47,6 +47,6 @@ export function updateRoomCapacity(id: string, capacity: string): Promise<any> {
 	return api.post(`room/updateRoomCapacity`, { json: { id, capacity } }).then(dataHandler);
 }
 
-export function updateRoomLocked(roomId: string, isLocked: string): Promise<any> {
-	return api.get(`room/updateRoomLocked`, { json: { roomId, isLocked } }).then(dataHandler);
+export function updateRoomLocked(id: string): Promise<any> {
+	return api.get(`room/updateRoomLocked/${id}`).then(dataHandler);
 }
