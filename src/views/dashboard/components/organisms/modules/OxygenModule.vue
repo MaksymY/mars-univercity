@@ -9,12 +9,9 @@
 	>
 		<template #header-right-content>
 			<div
-				:class="[
-					'header-value',
-					{ danger: dataSets[dataSets.length - 1]._value < chartStyle.dangerValue },
-				]"
+				:class="['header-value', { danger: dataSets[dataSets.length - 1]._value < dangerValue }]"
 			>
-				<span v-if="dataSets[dataSets.length - 1]._value < chartStyle.dangerValue"
+				<span v-if="dataSets[dataSets.length - 1]._value < dangerValue"
 					>Taux d'oxygène insufisant
 				</span>
 				<span>{{ dataSets[dataSets.length - 1]._value }} %</span>
