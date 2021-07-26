@@ -41,7 +41,7 @@ export default defineComponent({
 	},
 	beforeUnmount: function () {
 		if (this.occupantsReloader) {
-			this.occupantsReloader.clearTimeout();
+			clearInterval(this.occupantsReloader);
 		}
 	},
 	methods: {
