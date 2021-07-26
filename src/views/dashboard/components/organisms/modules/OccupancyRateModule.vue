@@ -84,6 +84,9 @@ export default defineComponent({
 			if (this.timeOutRef !== null) {
 				clearTimeout(this.timeOutRef);
 			}
+			this.timeOutRef = setTimeout(() => {
+				this.changeCapacityOccupancy(this.newValue);
+			}, 800);
 		},
 	},
 });
