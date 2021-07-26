@@ -1,5 +1,5 @@
 <template>
-	<div class="occupants-layer">
+	<div v-if="occupants" class="occupants-layer">
 		<p>Occupants de la salle {{ occupants.length }}</p>
 		<div class="occupants-layer__table-header">
 			<span occupants-layer__table-header__photo>Photo</span>

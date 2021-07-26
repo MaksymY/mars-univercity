@@ -1,5 +1,5 @@
 <template>
-	<ModuleLayout label="Taux d'occupation">
+	<ModuleLayout label="Taux d'occupation" icon="oxygen-icon">
 		<div class="occurancy">
 			<div class="donut">
 				<div class="donut-chart chart">

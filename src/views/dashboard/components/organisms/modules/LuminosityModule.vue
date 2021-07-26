@@ -1,5 +1,5 @@
 <template>
-	<ModuleLayout label="Luminosité">
+	<ModuleLayout label="Luminosité" icon="oxygen-icon">
 		<div class="luminosity">
 			<img class="luminosity__image" :src="getImagePath" />
 			<p class="luminosity__text">
