@@ -25,8 +25,9 @@
 							text="Déverouillée"
 							:is-active="roomSensorsData.locked ? false : true"
 							active-color="green"
-							@click="updateRoomLocked(roomId, false)"
+							@click="unlocked()"
 							@toggle-clicked="toggleDoorState(2)"
+							@locked-door="roomDetails"
 						></Toggle>
 						<Toggle
 							class="toogles-item"
@@ -87,6 +88,7 @@ export default defineComponent({
 		RoomOccupants,
 		Toggle,
 	},
+		emits: ["locked-door"],
 	data() {
 		return {
 			roomSensorsData: null,
@@ -125,11 +127,13 @@ export default defineComponent({
 		toggleDoorState(state) {
 			this.doorState = state
 		},
-		locked() {
-			updateRoomLocked(this.roomId, true)
+		async locked() {
+			await updateRoomLocked(this.roomId, true);
+			this.$emit("locked-door");
 		},
-		unlocked(){
-			updateRoomLocked(this.roomId, false)
+		async unlocked(){
+			await updateRoomLocked(this.roomId, false)
+			this.$emit("locked-door");
 		}
 	}
 });
