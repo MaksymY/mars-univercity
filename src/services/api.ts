@@ -1,8 +1,5 @@
 import ky from "ky";
 import { UserInfo } from "@/services/types/auth";
-import { User } from "@/services/types/user";
-
-import Cookies from "js-cookie";
 
 const api = ky.create({
 	prefixUrl: "https://api-mars-university.herokuapp.com/",

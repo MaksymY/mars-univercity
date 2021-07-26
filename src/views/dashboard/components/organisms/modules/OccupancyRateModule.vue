@@ -82,9 +82,6 @@ export default defineComponent({
 			if (this.timeOutRef !== null) {
 				clearTimeout(this.timeOutRef);
 			}
-			this.$data.timeOutRef = setTimeout(() => {
-				console.log(this.newValue);
-			}, 800);
 		},
 	},
 });

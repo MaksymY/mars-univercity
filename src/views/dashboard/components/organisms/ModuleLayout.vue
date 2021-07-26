@@ -115,7 +115,6 @@ export default defineComponent({
 				const rightGradients = this.values.map((value: any) => {
 					return value < this.dangerValue ? dangerGradient : linearGradient;
 				});
-				console.log(rightGradients);
 				return {
 					backgroundColor: rightGradients,
 				};
