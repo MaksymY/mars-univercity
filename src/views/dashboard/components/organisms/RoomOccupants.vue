@@ -1,6 +1,6 @@
 <template>
 	<div class="occupants-layer">
-		<p>Occupants de la salle</p>
+		<p>Occupants de la salle {{ occupants.length }}</p>
 		<div class="occupants-layer__table-header">
 			<span occupants-layer__table-header__photo>Photo</span>
 			<span occupants-layer__table-header__identity>Identité</span>
@@ -50,8 +50,15 @@ export default defineComponent({
 	color: $white;
 	padding: 1rem;
 
+	p {
+		text-align: center;
+		font-size: 20px;
+	}
+
 	&__table-header {
 		display: flex;
+		font-size: 16px;
+		margin-bottom: 1rem;
 
 		span {
 			display: block;

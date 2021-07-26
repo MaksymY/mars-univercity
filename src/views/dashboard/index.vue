@@ -1,9 +1,10 @@
 <template>
 	<div v-if="roomDetails" class="dashboard">
 		<div class="dashboard__datas">
-			<router-link class="dashboard__datas__back-link" to="/"
-				>&#129044; Retour à la carte</router-link
-			>
+			<router-link class="dashboard__datas__back-link" to="/">
+				<img src="@/assets/arrow-left.svg" alt="back-arrow" />
+				Retour à la carte
+			</router-link>
 			<img
 				class="dashboard__datas__illustration"
 				:src="roomDetails.img_url"
@@ -114,10 +115,17 @@ export default defineComponent({
 		&__back-link {
 			color: $white;
 			text-decoration: none;
+			display: flex;
+			align-items: center;
+			font-size: 16px;
 
-			&:hover {
-				font-weight: bold;
+			img {
+				margin-right: 0.5rem;
 			}
+
+			// &:hover {
+			// font-weight: bold;
+			// }
 		}
 
 		&__illustration {

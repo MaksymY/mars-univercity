@@ -129,6 +129,8 @@ export default defineComponent({
 
 		&__infos {
 			margin-left: auto;
+			font-size: 16px;
+			font-weight: bold;
 		}
 	}
 

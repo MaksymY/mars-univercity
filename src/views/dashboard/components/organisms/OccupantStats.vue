@@ -4,7 +4,11 @@
 		<div class="occupant__identity">
 			<span>{{ occupant.firstName }} {{ occupant.lastName }}</span>
 		</div>
-		<canvas :id="`${occupant.firstName}-canvas`" class="occupant__chart"></canvas>
+		<div class="occupant__stats">
+			<img class="occupant__stats__heart" src="@/assets/Vector.svg" alt="Coeur" />
+			<span class="occupant__stats__last-oxymetre-value">{{ lastOxymetreValue }}%</span>
+			<canvas :id="`${occupant.firstName}-canvas`" class="occupant__stats__chart"></canvas>
+		</div>
 	</div>
 </template>
 
@@ -63,6 +67,13 @@ export default defineComponent({
 			} as ChartConfiguration,
 		};
 	},
+	computed: {
+		lastOxymetreValue(): number {
+			return Math.round(
+				this.occupant.oxymetre_values[this.occupant.oxymetre_values.length - 1].value,
+			);
+		},
+	},
 	mounted(): void {
 		this.initChart();
 	},
@@ -82,12 +93,13 @@ export default defineComponent({
 	padding: 0.5rem;
 	display: flex;
 	align-items: center;
+	border-radius: 5px;
 
 	font-size: 14px;
 
 	&__photo {
-		width: 70px;
-		height: 70px;
+		width: 50px;
+		height: 50px;
 		margin-right: 0.5rem;
 	}
 
@@ -95,10 +107,29 @@ export default defineComponent({
 		font-weight: bold;
 	}
 
-	&__chart {
-		max-width: 70px;
-		max-height: 70px;
+	&__stats {
 		margin-left: auto;
+		display: flex;
+		align-items: center;
+
+		&__heart {
+			margin-right: 0.2rem;
+		}
+
+		&__last-oxymetre-value {
+			margin-right: 0.5rem;
+			font-size: 16px;
+		}
+
+		&__chart {
+			max-width: 70px;
+			max-height: 50px;
+			margin-left: auto;
+
+			background-image: url("../../../../assets/chart_bcg.png");
+			background-size: contain;
+			background-repeat: no-repeat;
+		}
 	}
 }
 </style>
