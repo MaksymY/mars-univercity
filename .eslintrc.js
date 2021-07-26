@@ -45,9 +45,9 @@ module.exports = {
 				allowTemplateLiterals: true,
 			},
 		],
-		"no-console": isDev ? "off" : "error",
+		// "no-console": isDev ? "off" : "error",
 
-		"no-debugger": isDev ? "off" : "error",
+		// "no-debugger": isDev ? "off" : "error",
 	},
 	overrides: [
 		{
