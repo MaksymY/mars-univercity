@@ -1,33 +1,28 @@
 <template>
 	<ModuleLayout label="Taux d'occupation" icon="oxygen-icon">
 		<template #content>
-			<div class="occurancy">
+			<div class="occupancy">
 				<div class="donut">
-					<div class="donut-chart chart">
-						<div class="dunutGraph">
-							<p class="dunutGraphtext">{{ calcPercentage }}%</p>
-							<figure class="dunutGraphgraph">
-								<svg width="100%" height="100%" viewBox="0 0 42 42" class="dunutGraph__graph-donut">
-									<circle class="dunutGraphgraph-donut-segment" cx="21" cy="21" r="16"></circle>
-									<circle
-										class="dunutGraph__graph-donut-ring"
-										:style="{ strokeDashoffset: calcPercentage - 101 }"
-										cx="21"
-										cy="21"
-										r="16"
-									></circle>
-								</svg>
-							</figure>
-						</div>
-					</div>
-					<p>{{ occupancyData.actual_users.length }}/{{ occupancyData.capacity }} pers.</p>
+					<p class="donut__percentage">{{ calcPercentage }}%</p>
+					<svg width="100%" height="100%" viewBox="0 0 42 42" class="donut__graph">
+						<circle
+							class="dunutGraph__graph-donut-ring"
+							:style="{ strokeDashoffset: calcPercentage - 101 }"
+							cx="21"
+							cy="21"
+							r="16"
+						></circle>
+					</svg>
 				</div>
-				<div class="occurence__handler">
-					<p>nombre de personne max.</p>
+				<p class="occupancy-rate">
+					{{ occupancyData.actual_users.length }}/{{ occupancyData.capacity }} pers.
+				</p>
+				<div class="occupancy__handler">
+					<p>Nombre de personne max.</p>
 					<p>{{ occupancyData.capacity }}</p>
-					<div class="occurence_buttons">
-						<button class="occurence__button" @click="changeCapacityOccurancy('10')">-</button>
-						<button class="occurence__button">+</button>
+					<div class="occupancy_buttons">
+						<button class="occupancy__button" @click="debounce('minus')">-</button>
+						<button class="occupancy__button" @click="debounce('plus')">+</button>
 					</div>
 				</div>
 			</div>
@@ -58,27 +53,34 @@ export default defineComponent({
 	emits: ["capacity-changed"],
 	data: function () {
 		return {
-			timeOutRef: null as any,
-			newValue: null as any,
 			styleObject: {
 				color: "red",
 				fontSize: "13px",
 			},
+			timeOutRef: null as any,
+			initialValue: 40 as any,
+			newValue: null as any,
 		};
 	},
 	computed: {
 		calcPercentage(): number {
-			return (this.occupancyData.actual_users.length / this.occupancyData.capacity) * 100;
+			return Math.round(
+				(this.occupancyData.actual_users.length / this.occupancyData.capacity) * 100,
+			);
 		},
 	},
 	methods: {
-		async changeCapacityOccurancy(capacity: string) {
+		async changeCapacityOccupancy(capacity: string) {
 			await updateRoomCapacity(this.occupancyData._id, capacity);
 			this.$emit("capacity-changed");
 		},
-		debounce() {
-			let value = parseInt(this.occupancyData.capacity);
-			this.newValue = value++;
+		debounce(setter: string) {
+			if (setter === "minus") {
+				this.newValue = this.initialValue--;
+			}
+			if (setter === "plus") {
+				this.newValue = this.initialValue++;
+			}
 			if (this.timeOutRef !== null) {
 				clearTimeout(this.timeOutRef);
 			}
@@ -88,31 +90,40 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.occurancy {
+.occupancy {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
+	max-height: 80%;
+	position: relative;
+	flex: 1;
 }
 
-.occurence_buttons {
+.occupancy_buttons {
 	margin-top: $xs;
 }
 
-.occurence__handler {
+.occupancy__handler {
 	display: flex;
 	align-content: center;
 	justify-content: space-between;
 	width: 100%;
+	font-size: 14px;
 }
 
-.occurence__button {
+.occupancy-rate {
+	font-size: 14px;
+	text-align: center;
+}
+
+.occupancy__button {
 	border-radius: 8px;
 	background-color: $LightBlue;
 	color: $LighterBlue;
 	font-size: 14px;
 	border: 2px solid $LightBlue;
-	width: 50px;
-	height: 50px;
+	width: 25px;
+	height: 25px;
 	&:hover {
 		border: 2px solid white;
 		color: white;
@@ -130,6 +141,18 @@ export default defineComponent({
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	justify-content: center;
+	position: relative;
+	flex: 1;
+
+	&__percentage {
+		position: absolute;
+	}
+
+	&__graph {
+		position: absolute;
+		height: 100%;
+	}
 }
 
 .dunutGraph {
