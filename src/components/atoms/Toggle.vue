@@ -1,5 +1,10 @@
 <template>
-	<button class="button" :class="`button--${isActive ? toggleType : null}`" v-bind="$attrs">
+	<button
+		class="button"
+		:class="`button--${isActive ? activeColor : null}`"
+		v-bind="$attrs"
+		@click="$emit('toggle-clicked')"
+	>
 		{{ text }}
 	</button>
 </template>
@@ -13,19 +18,17 @@ export default defineComponent({
 		text: {
 			type: String,
 			required: true,
-			default: "",
 		},
 		isActive: {
 			type: Boolean,
 			required: true,
-			default: false,
 		},
-		toggleType: {
-			type: String as PropType<"normal" | "lock" | "unlock">,
+		activeColor: {
+			type: String as PropType<"white" | "green" | "red">,
 			required: true,
-			default: "normal",
 		},
 	},
+	emits: ["toggle-clicked"],
 });
 </script>
 
@@ -37,18 +40,19 @@ export default defineComponent({
 	color: $LighterBlue;
 	font-size: 14px;
 	border: 2px solid $LightBlue;
+	cursor: pointer;
 
-	&--normal {
+	&--white {
 		border: 2px solid white;
 		color: white;
 	}
 
-	&--lock {
+	&--red {
 		border: 2px solid $Ruby;
 		color: $Ruby;
 	}
 
-	&--unlock {
+	&--green {
 		border: 2px solid $LightGreen;
 		color: $LightGreen;
 	}

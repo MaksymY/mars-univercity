@@ -1,12 +1,14 @@
 <template>
 	<ModuleLayout label="Luminosité" icon="oxygen-icon">
-		<div class="luminosity">
-			<img class="luminosity__image" :src="getImagePath" />
-			<p class="luminosity__text">
-				{{ dataSets[5]._value }} Lx
-				<span class="luminosity__text__status">{{ GetLuminosityStatus }}</span>
-			</p>
-		</div>
+		<template #content>
+			<div class="luminosity">
+				<img class="luminosity__image" :src="getImagePath" />
+				<p class="luminosity__text">
+					{{ dataSets[5]._value }} Lx
+					<span class="luminosity__text__status">{{ GetLuminosityStatus }}</span>
+				</p>
+			</div>
+		</template>
 	</ModuleLayout>
 </template>
 

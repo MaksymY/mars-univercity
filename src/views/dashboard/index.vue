@@ -13,6 +13,32 @@
 			<h1 class="dashboard__datas__title">{{ roomDetails.label }}</h1>
 			<div v-if="roomSensorsData" class="dashboard__datas__charts">
 				<OccupancyRateModule class="dashboard__datas__charts__occupancy"></OccupancyRateModule>
+				<div class="dashboard__datas__charts__door-management">
+					<span>Verrouillage de la porte</span>
+					<div class="toggles">
+						<Toggle
+							class="toogles-item"
+							text="Auto"
+							:is-active="doorState === 1"
+							active-color="white"
+							@toggle-clicked="toggleDoorState(1)"
+						></Toggle>
+						<Toggle
+							class="toogles-item"
+							text="Déverouillée"
+							:is-active="doorState === 2"
+							active-color="green"
+							@toggle-clicked="toggleDoorState(2)"
+						></Toggle>
+						<Toggle
+							class="toogles-item"
+							text="Verouillée"
+							:is-active="doorState === 3"
+							active-color="red"
+							@toggle-clicked="toggleDoorState(3)"
+						></Toggle>
+					</div>
+				</div>
 				<ElectricityModule
 					class="dashboard__datas__charts__electricity"
 					:data-sets="roomSensorsData.Watts"
@@ -49,6 +75,7 @@ import RoomOccupants from "./components/organisms/RoomOccupants.vue"
 
 import { getRoomSensorsData, getRoomDetails } from "@/services/api";
 
+import Toggle from "@/components/atoms/Toggle.vue"
 
 
 export default defineComponent({
@@ -59,12 +86,14 @@ export default defineComponent({
 		OxygenModule,
 		LuminosityModule,
 		TemperatureModule,
-		RoomOccupants
+		RoomOccupants,
+		Toggle,
 	},
 	data() {
 		return {
 			roomSensorsData: null,
 			roomDetails: null,
+			doorState: 1 //- Door can have 1, 2 or 3
 		};
 	},
 	computed: {
@@ -95,6 +124,9 @@ export default defineComponent({
 			}
 			this.roomSensorsData =  dataMappedByMeasurement
 		},
+		toggleDoorState(state) {
+			this.doorState = state
+		}
 	}
 });
 </script>
@@ -152,6 +184,23 @@ export default defineComponent({
 			&__occupancy {
 				grid-area: a;
 			}
+
+			&__door-management {
+				grid-area: b;
+				background-color: $BlackRussian;
+				padding: $m;
+				border-radius: 10px;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+
+				.toggles {
+					.toogles-item {
+						margin-left: 0.5rem;
+					}
+				}
+			}
+
 			&__electricity {
 				grid-area: e;
 			}

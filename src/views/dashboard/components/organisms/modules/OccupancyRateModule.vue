@@ -1,26 +1,28 @@
 <template>
 	<ModuleLayout label="Taux d'occupation" icon="oxygen-icon">
-		<div class="occurancy">
-			<div class="donut">
-				<div class="donut-chart chart">
-					<div class="dunutGraph">
-						<p class="dunutGraphtext">10%</p>
-						<figure class="dunutGraphgraph">
-							<svg width="100%" height="100%" viewBox="0 0 42 42" class="dunutGraph__graph-donut">
-								<circle class="dunutGraphgraph-donut-segment" cx="21" cy="21" r="16"></circle>
-								<circle
-									class="dunutGraph__graph-donut-ring"
-									:style="{ strokeDashoffset: 0 }"
-									cx="21"
-									cy="21"
-									r="16"
-								></circle>
-							</svg>
-						</figure>
+		<template #content>
+			<div class="occurancy">
+				<div class="donut">
+					<div class="donut-chart chart">
+						<div class="dunutGraph">
+							<p class="dunutGraphtext">10%</p>
+							<figure class="dunutGraphgraph">
+								<svg width="100%" height="100%" viewBox="0 0 42 42" class="dunutGraph__graph-donut">
+									<circle class="dunutGraphgraph-donut-segment" cx="21" cy="21" r="16"></circle>
+									<circle
+										class="dunutGraph__graph-donut-ring"
+										:style="{ strokeDashoffset: 0 }"
+										cx="21"
+										cy="21"
+										r="16"
+									></circle>
+								</svg>
+							</figure>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
+		</template>
 	</ModuleLayout>
 </template>
 
