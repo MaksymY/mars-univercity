@@ -1,0 +1,239 @@
+<template>
+	<ModuleLayout label="Taux d'occupation" icon="oxygen-icon">
+		<template #content>
+			<div class="occupancy">
+				<div class="donut">
+					<p class="donut__percentage">{{ calcPercentage }}%</p>
+					<svg width="100%" height="100%" viewBox="0 0 42 42" class="donut__graph">
+						<circle
+							class="dunutGraph__graph-donut-ring"
+							:style="{ strokeDashoffset: calcPercentage - 101 }"
+							cx="21"
+							cy="21"
+							r="16"
+						></circle>
+					</svg>
+				</div>
+				<p class="occupancy-rate">
+					{{ occupancyData.actual_users.length }}/{{ occupancyData.capacity }} pers.
+				</p>
+				<div class="occupancy__handler">
+					<p>Nombre de personne max.</p>
+					<p>{{ occupancyData.capacity }}</p>
+					<div class="occupancy_buttons">
+						<button class="occupancy__button" @click="debounce('minus')">-</button>
+						<button class="occupancy__button" @click="debounce('plus')">+</button>
+					</div>
+				</div>
+			</div>
+		</template>
+	</ModuleLayout>
+</template>
+
+<script lang="ts">
+import { defineComponent } from "vue";
+import ModuleLayout from "../ModuleLayout.vue";
+import { updateRoomCapacity } from "@/services/api";
+
+export default defineComponent({
+	name: "OccupancyRateModule",
+	components: {
+		ModuleLayout,
+	},
+	props: {
+		dataSets: {
+			type: Object,
+			required: true,
+		},
+		occupancyData: {
+			type: Object,
+			required: true,
+		},
+	},
+	emits: ["capacity-changed"],
+	data: function () {
+		return {
+			styleObject: {
+				color: "red",
+				fontSize: "13px",
+			},
+			timeOutRef: null as any,
+			initialValue: 40 as any,
+			newValue: null as any,
+		};
+	},
+	computed: {
+		calcPercentage(): number {
+			return Math.round(
+				(this.occupancyData.actual_users.length / this.occupancyData.capacity) * 100,
+			);
+		},
+	},
+	methods: {
+		async changeCapacityOccupancy(capacity: string) {
+			await updateRoomCapacity(this.occupancyData._id, capacity);
+			this.$emit("capacity-changed");
+		},
+		debounce(setter: string) {
+			if (setter === "minus") {
+				this.newValue = this.initialValue--;
+			}
+			if (setter === "plus") {
+				this.newValue = this.initialValue++;
+			}
+			if (this.timeOutRef !== null) {
+				clearTimeout(this.timeOutRef);
+			}
+		},
+	},
+});
+</script>
+
+<style lang="scss">
+.occupancy {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	max-height: 80%;
+	position: relative;
+	flex: 1;
+}
+
+.occupancy_buttons {
+	margin-top: $xs;
+}
+
+.occupancy__handler {
+	display: flex;
+	align-content: center;
+	justify-content: space-between;
+	width: 100%;
+	font-size: 14px;
+}
+
+.occupancy-rate {
+	font-size: 14px;
+	text-align: center;
+}
+
+.occupancy__button {
+	border-radius: 8px;
+	background-color: $LightBlue;
+	color: $LighterBlue;
+	font-size: 14px;
+	border: 2px solid $LightBlue;
+	width: 25px;
+	height: 25px;
+	&:hover {
+		border: 2px solid white;
+		color: white;
+		cursor: pointer;
+	}
+}
+
+.dunutGraphtext {
+	position: absolute;
+	transform: translateY(36px) translateX(85px);
+	color: $purple;
+}
+
+.donut {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	flex: 1;
+
+	&__percentage {
+		position: absolute;
+	}
+
+	&__graph {
+		position: absolute;
+		height: 100%;
+	}
+}
+
+.dunutGraph {
+	text-align: center;
+	width: 35%;
+	position: relative;
+	&__text {
+		font-size: 1.4em;
+		color: red;
+		top: 0;
+		bottom: 0;
+		position: absolute;
+	}
+
+	&__graph-donut {
+		width: 6em;
+		fill: none;
+		position: relative;
+	}
+	&__graph-donut-ring {
+		fill: transparent;
+		stroke: $purple;
+		stroke-width: 3;
+		stroke-dasharray: 101;
+		stroke-dashoffset: 101;
+		transform-origin: center center;
+		transform: rotate(-90deg);
+		transition: linear 1s;
+		stroke-linecap: butt;
+	}
+
+	&__graph-donut-segment {
+		fill: transparent;
+		stroke: #ababab;
+		stroke-width: 3;
+	}
+}
+
+.module-layout {
+	background-color: $BlackRussian;
+	color: white;
+	padding: $m;
+
+	&__header {
+		display: flex;
+		align-items: center;
+
+		&__icon {
+			width: 24px;
+			height: 24px;
+			stroke: $white;
+			margin-right: $xxs;
+		}
+
+		&__title {
+			font-size: 16px;
+		}
+	}
+}
+
+.donut-chart {
+	position: relative;
+	border-radius: 50%;
+	overflow: hidden;
+
+	.slice {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+	}
+
+	.chart-center {
+		position: absolute;
+		border-radius: 50%;
+
+		span {
+			display: block;
+			text-align: center;
+		}
+	}
+}
+</style>

@@ -1,6 +1,6 @@
 <template>
 	<TheIconsSet />
-	<router-view class="main" />
+	<router-view class="main"/>
 </template>
 
 <script lang="ts">

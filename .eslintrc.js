@@ -18,7 +18,6 @@ module.exports = {
 		ecmaVersion: 2020,
 	},
 	rules: {
-		indent: ["warn", "tab"],
 		"no-tabs": [
 			"error",
 			{
@@ -46,9 +45,9 @@ module.exports = {
 				allowTemplateLiterals: true,
 			},
 		],
-		"no-console": isDev ? "off" : "error",
+		// "no-console": isDev ? "off" : "error",
 
-		"no-debugger": isDev ? "off" : "error",
+		// "no-debugger": isDev ? "off" : "error",
 	},
 	overrides: [
 		{
