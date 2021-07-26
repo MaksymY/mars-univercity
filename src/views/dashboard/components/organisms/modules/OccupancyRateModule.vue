@@ -21,8 +21,8 @@
 					<p>Nombre de personne max.</p>
 					<p>{{ occupancyData.capacity }}</p>
 					<div class="occupancy_buttons">
-						<button class="occupancy__button" @click="changeCapacityOccupancy('10')">-</button>
-						<button class="occupancy__button">+</button>
+						<button class="occupancy__button" @click="debounce('minus')">-</button>
+						<button class="occupancy__button" @click="debounce('plus')">+</button>
 					</div>
 				</div>
 			</div>
@@ -53,17 +53,20 @@ export default defineComponent({
 	emits: ["capacity-changed"],
 	data: function () {
 		return {
-			timeOutRef: null as any,
-			newValue: null as any,
 			styleObject: {
 				color: "red",
 				fontSize: "13px",
 			},
+			timeOutRef: null as any,
+			initialValue: 40 as any,
+			newValue: null as any,
 		};
 	},
 	computed: {
 		calcPercentage(): number {
-			return (this.occupancyData.actual_users.length / this.occupancyData.capacity) * 100;
+			return Math.round(
+				(this.occupancyData.actual_users.length / this.occupancyData.capacity) * 100,
+			);
 		},
 	},
 	methods: {
@@ -71,14 +74,18 @@ export default defineComponent({
 			await updateRoomCapacity(this.occupancyData._id, capacity);
 			this.$emit("capacity-changed");
 		},
-		debounce() {
-			let value = parseInt(this.occupancyData.capacity);
-			this.newValue = value++;
+		debounce(setter: string) {
+			if (setter === "minus") {
+				this.newValue = this.initialValue--;
+			}
+			if (setter === "plus") {
+				this.newValue = this.initialValue++;
+			}
 			if (this.timeOutRef !== null) {
 				clearTimeout(this.timeOutRef);
 			}
-			this.$data.timeOutRef = setTimeout(() => {
-				console.log(this.newValue);
+			this.timeOutRef = setTimeout(() => {
+				this.changeCapacityOccupancy(this.newValue);
 			}, 800);
 		},
 	},
