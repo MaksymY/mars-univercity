@@ -42,3 +42,7 @@ export function getRoomSensorsData(room_node_id: string): Promise<any> {
 export function getRoomDetails(roomId: string): Promise<any> {
 	return api.get(`room/getRoomDetails/${roomId}`).then(dataHandler);
 }
+
+export function updateRoomCapacity(roomId: string, capacity: string): Promise<any> {
+	return api.post(`room/updateRoomCapacity`, { json: { roomId, capacity } }).then(dataHandler);
+}

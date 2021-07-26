@@ -26,7 +26,7 @@
 					<p>nombre de personne max.</p>
 					<p>{{ occupancyData.capacity }}</p>
 					<div class="occurence_buttons">
-						<button class="occurence__button">-</button>
+						<button class="occurence__button" @click="changeCapacityOccurancy">-</button>
 						<button class="occurence__button">+</button>
 					</div>
 				</div>
@@ -38,6 +38,8 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import ModuleLayout from "../ModuleLayout.vue";
+import { updateRoomCapacity } from "@/services/api";
+
 export default defineComponent({
 	name: "OccupancyRateModule",
 	components: {
@@ -64,6 +66,11 @@ export default defineComponent({
 	computed: {
 		calcPercentage(): number {
 			return (this.occupancyData.actual_users.length / this.occupancyData.capacity) * 100;
+		},
+	},
+	methods: {
+		changeCapacityOccurancy(capacity: string) {
+			updateRoomCapacity(this.occupancyData._id, capacity);
 		},
 	},
 });
