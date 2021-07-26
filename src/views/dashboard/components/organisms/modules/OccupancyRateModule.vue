@@ -5,13 +5,13 @@
 				<div class="donut">
 					<div class="donut-chart chart">
 						<div class="dunutGraph">
-							<p class="dunutGraphtext">10%</p>
+							<p class="dunutGraphtext">{{ calcPercentage }}%</p>
 							<figure class="dunutGraphgraph">
 								<svg width="100%" height="100%" viewBox="0 0 42 42" class="dunutGraph__graph-donut">
 									<circle class="dunutGraphgraph-donut-segment" cx="21" cy="21" r="16"></circle>
 									<circle
 										class="dunutGraph__graph-donut-ring"
-										:style="{ strokeDashoffset: 0 }"
+										:style="{ strokeDashoffset: calcPercentage }"
 										cx="21"
 										cy="21"
 										r="16"
@@ -20,11 +20,11 @@
 							</figure>
 						</div>
 					</div>
-					<p>32/{{ occupancyData.occupancyData }} pers.</p>
+					<p>{{ occupancyData.actual_users.length }}/{{ occupancyData.capacity }} pers.</p>
 				</div>
 				<div class="occurence__handler">
 					<p>nombre de personne max.</p>
-					<p>50</p>
+					<p>{{ occupancyData.capacity }}</p>
 					<div class="occurence_buttons">
 						<button class="occurence__button">-</button>
 						<button class="occurence__button">+</button>
@@ -49,7 +49,7 @@ export default defineComponent({
 			required: true,
 		},
 		occupancyData: {
-			type: Number,
+			type: Object,
 			required: true,
 		},
 	},
@@ -60,6 +60,11 @@ export default defineComponent({
 				fontSize: "13px",
 			},
 		};
+	},
+	computed: {
+		calcPercentage(): number {
+			return (this.occupancyData.actual_users.length / this.occupancyData.capacity) * 100;
+		},
 	},
 });
 </script>
