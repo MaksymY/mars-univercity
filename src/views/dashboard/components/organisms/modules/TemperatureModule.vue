@@ -1,12 +1,19 @@
 <template>
 	<ModuleLayout label="Temperature" icon="oxygen-icon">
-		<template #header-right-content></template>
+		<template #header-right-content>
+			<span style="color: red">{{ dangerValueSlug }}</span>
+		</template>
 		<template #content>
 			<div class="temperature-layout">
-				<div class="temperature-layout__circle">
+				<div
+					class="temperature-layout__circle"
+					:style="`color: ${temperatureStatus.color}; border-color: ${temperatureStatus.color}`"
+				>
 					<span>{{ dataSets[dataSets.length - 1]._value }}°C</span>
 				</div>
-				<span class="temperature-layout__slug">{{ temperatureSlug }}</span>
+				<span class="temperature-layout__slug" :style="`color: ${temperatureStatus.color}`">{{
+					temperatureStatus.slug
+				}}</span>
 			</div>
 		</template>
 	</ModuleLayout>
@@ -28,23 +35,38 @@ export default defineComponent({
 			required: true,
 		},
 	},
+	data() {
+		return {
+			dangerValues: { min: 10, max: 35 },
+		};
+	},
 	computed: {
-		temperatureSlug() {
+		temperatureStatus() {
 			const temp = this.dataSets[this.dataSets.length - 1]._value;
 			switch (true) {
 				case temp <= 10:
-					return "Froid";
+					return { color: "blue", slug: "Froid" };
 				case temp <= 15:
-					return "Frais";
+					return { color: "white", slug: "Frais" };
 				case temp <= 20:
-					return "Tempéré";
+					return { color: "white", slug: "Tempéré" };
 				case temp <= 25:
-					return "Chaud";
+					return { color: "white", slug: "Chaud" };
 				case temp <= 35:
-					return "Très chaud";
+					return { color: "red", slug: "Très chaud" };
 				default:
-					return "Tempéré";
+					return { color: "white", slug: "Tempéré" };
 			}
+		},
+		dangerValueSlug() {
+			const currentValue = this.dataSets[this.dataSets.length - 1]._value;
+			if (currentValue <= this.dangerValues.min) {
+				return "Trop basse";
+			}
+			if (currentValue >= this.dangerValues.max) {
+				return "Trop élevée";
+			}
+			return "";
 		},
 	},
 });
