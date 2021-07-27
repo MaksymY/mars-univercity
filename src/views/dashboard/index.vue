@@ -2,7 +2,7 @@
 	<MainLayout>
 		<div v-if="roomDetails" class="dashboard">
 			<div class="dashboard__datas">
-				<router-link class="dashboard__datas__back-link" to="/">
+				<router-link class="dashboard__datas__back-link" to="/map">
 					<img src="@/assets/arrow-left.svg" alt="back-arrow" />
 					Retour à la carte
 				</router-link>
