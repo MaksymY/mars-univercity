@@ -40,7 +40,7 @@ export default defineComponent({
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	height: 136px;
+	height: 138px;
 	width: 176px;
 	border: 2px solid $LavederBlue;
 	border-radius: 36px;

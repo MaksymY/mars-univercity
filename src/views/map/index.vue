@@ -2,16 +2,22 @@
 	<div class="map">
 		<MainLayout>
 			<div class="map__wrapper">
+				<div class="map__rock"></div>
 				<div class="map__main">
 					<LeftMap
-						:selectInfo="roomInfo ? true : false"
+						:selectInfo="roomInfo"
 						:leftRooms="roomLeft"
 						class="map__main-left"
 						@open-info="openInfo"
 					/>
-					<CenterMap :centerRooms="roomCenter" class="map__main-center" @open-info="openInfo" />
+					<CenterMap
+						:selectInfo="roomInfo"
+						:centerRooms="roomCenter"
+						class="map__main-center"
+						@open-info="openInfo"
+					/>
 					<RightMap
-						:selectInfo="roomInfo ? true : false"
+						:selectInfo="roomInfo"
 						:rightRooms="roomRight"
 						class="map__main-right"
 						@open-info="openInfo"
@@ -113,14 +119,33 @@ export default defineComponent({
 		display: flex;
 		justify-content: center;
 		gap: 40px;
+		height: 100%;
+		align-items: center;
+		position: relative;
+	}
+	&__rock {
+		position: absolute;
+		z-index: 0;
+		height: 100%;
+		width: 100%;
+		background-image: url("./../../assets/map-rock.png");
+		background-repeat: no-repeat;
+		background-position: center;
+		background-size: contain;
 	}
 
 	&__main {
+		position: relative;
+		z-index: 1;
 		display: grid;
 		justify-content: center;
 		grid-template-columns: 176px 353px 176px;
 		grid-template-areas: "right center left";
 		gap: 39px;
+		background: url("./../../assets/Couloirs.png");
+		background-origin: border-box;
+		background-size: cover;
+		background-repeat: round;
 	}
 
 	&__main-right {
@@ -148,6 +173,8 @@ export default defineComponent({
 		background-color: $Pau;
 		border-radius: 10px;
 		width: 300px;
+		height: 100%;
+		z-index: 1;
 	}
 	&__infos-close {
 		width: 16px;

@@ -2,7 +2,7 @@
 	<div class="leftMap">
 		<li v-for="room in leftRooms" :key="room._id" class="leftMap__item">
 			<LeftRoom
-				:select="room._id === selected && selectInfo"
+				:select="room._id === selected && selectInfo && selected === selectInfo._id"
 				:room="room.label"
 				:status="room.locked"
 				@click="getTheRoom(room._id)"
