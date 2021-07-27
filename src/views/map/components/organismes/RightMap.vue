@@ -2,7 +2,7 @@
 	<div class="rightMap">
 		<li v-for="room in rightRooms" :key="room._id" class="rightMap__item">
 			<RightRoom
-				:select="room._id === selected && selectInfo"
+				:select="room._id === selected && selectInfo && selected === selectInfo._id"
 				:room="room.label"
 				:status="room.locked"
 				@click="getTheRoom(room._id)"
@@ -28,8 +28,9 @@ export default defineComponent({
 			default: Object,
 		},
 		selectInfo: {
-			type: Boolean,
+			type: Object,
 			required: false,
+			default: Object,
 		},
 	},
 	emits: ["open-info"],

@@ -1,19 +1,45 @@
 <template>
 	<div class="centerMap">
 		<div class="centerMap__top">
-			<CenterRoom room="Toilettes H" :status="getKeyByValue('Toilettes H')" />
-			<CenterRoom room="Infirmerie" />
-			<CenterRoom room="Toilettes F" />
+			<CenterRoom
+				:select="selectInfo ? getKeyByValue('Toilette H')._id === selectInfo._id : false"
+				:data="getKeyByValue('Toilette H')"
+				@click="getTheRoom(getKeyByValue('Toilette H')._id)"
+			/>
+			<CenterRoom
+				:select="selectInfo ? getKeyByValue('Infirmerie')._id === selectInfo._id : false"
+				:data="getKeyByValue('Infirmerie')"
+				@click="getTheRoom(getKeyByValue('Infirmerie')._id)"
+			/>
+			<CenterRoom
+				:select="selectInfo ? getKeyByValue('Toilette F')._id === selectInfo._id : false"
+				:data="getKeyByValue('Toilette F')"
+				@click="getTheRoom(getKeyByValue('Toilette F')._id)"
+			/>
 		</div>
 		<div class="centerMap__middle">
-			<CenterRoom class="centerMap__middle-professor" room="Salle prof" />
-			<CenterRoom room="Salle Olympus" />
+			<CenterRoom
+				class="centerMap__middle-professor"
+				:select="selectInfo ? getKeyByValue('Salle des Profs')._id === selectInfo._id : false"
+				:data="getKeyByValue('Salle des Profs')"
+				@click="getTheRoom(getKeyByValue('Salle des Profs')._id)"
+			/>
+			<CenterRoom
+				:select="selectInfo ? getKeyByValue('Administration')._id === selectInfo._id : false"
+				:data="getKeyByValue('Administration')"
+				@click="getTheRoom(getKeyByValue('Administration')._id)"
+			/>
 		</div>
-		<CenterHallRoom room="Hall" />
+		<CenterHallRoom
+			:select="selectInfo ? getKeyByValue('Hall')._id === selectInfo._id : false"
+			:data="getKeyByValue('Hall')"
+			@click="getTheRoom(getKeyByValue('Hall')._id)"
+		/>
 	</div>
 </template>
 
 <script lang="ts">
+import { getRoomDetails } from "@/services/api";
 import { defineComponent } from "vue";
 import CenterRoom from "../molecules/CenterRoom.vue";
 import CenterHallRoom from "../molecules/CenterHallRoom.vue";
@@ -28,14 +54,22 @@ export default defineComponent({
 		centerRooms: {
 			type: Object,
 			required: false,
+			default: Object,
+		},
+		selectInfo: {
+			type: Object,
+			required: false,
+			default: Object,
 		},
 	},
+	emits: ["open-info"],
 	methods: {
 		getKeyByValue(value: string) {
-			this.centerRooms?.find((obj: any) => {
-				console.log(obj.label);
-				return obj.label === value;
-			});
+			return this.centerRooms?.find((el: any) => el.label === value);
+		},
+		async getTheRoom(id: string) {
+			const roomDetails = await getRoomDetails(id);
+			this.$emit("open-info", roomDetails);
 		},
 	},
 });
