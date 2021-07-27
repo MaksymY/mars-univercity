@@ -28,8 +28,9 @@ export default defineComponent({
 			default: Object,
 		},
 		selectInfo: {
-			type: Boolean,
+			type: Object,
 			required: false,
+			default: Object,
 		},
 	},
 	emits: ["open-info"],
