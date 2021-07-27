@@ -1,5 +1,10 @@
 <template>
-	<ModuleLayout label="Taux d'occupation" icon="oxygen-icon">
+	<MiniRoomDataItem label="Taux d'occupation" icon="oxygen-icon">
+		<template #left-side-infos>
+			<p class="occupancy-rate">
+				{{ occupancyData.actual_users.length }}/{{ occupancyData.capacity }} pers.
+			</p>
+		</template>
 		<template #content>
 			<div class="occupancy">
 				<div class="donut">
@@ -14,31 +19,19 @@
 						></circle>
 					</svg>
 				</div>
-				<p class="occupancy-rate">
-					{{ occupancyData.actual_users.length }}/{{ occupancyData.capacity }} pers.
-				</p>
-				<div class="occupancy__handler">
-					<p>Nombre de personne max.</p>
-					<p>{{ occupancyData.capacity }}</p>
-					<div class="occupancy_buttons">
-						<button class="occupancy__button" @click="debounce('minus')">-</button>
-						<button class="occupancy__button" @click="debounce('plus')">+</button>
-					</div>
-				</div>
 			</div>
 		</template>
-	</ModuleLayout>
+	</MiniRoomDataItem>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import ModuleLayout from "../ModuleLayout.vue";
-import { updateRoomCapacity } from "@/services/api";
+import MiniRoomDataItem from "../MiniRoomDataItem.vue";
 
 export default defineComponent({
 	name: "OccupancyRateModule",
 	components: {
-		ModuleLayout,
+		MiniRoomDataItem,
 	},
 	props: {
 		dataSets: {
@@ -69,37 +62,17 @@ export default defineComponent({
 			);
 		},
 	},
-	methods: {
-		async changeCapacityOccupancy(capacity: string) {
-			await updateRoomCapacity(this.occupancyData._id, capacity);
-			this.$emit("capacity-changed");
-		},
-		debounce(setter: string) {
-			if (setter === "minus") {
-				this.newValue = this.initialValue--;
-			}
-			if (setter === "plus") {
-				this.newValue = this.initialValue++;
-			}
-			if (this.timeOutRef !== null) {
-				clearTimeout(this.timeOutRef);
-			}
-			this.timeOutRef = setTimeout(() => {
-				this.changeCapacityOccupancy(this.newValue);
-			}, 800);
-		},
-	},
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 .occupancy {
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
-	max-height: 80%;
-	position: relative;
-	flex: 1;
+	width: 30%;
+	// display: flex;
+	// justify-content: space-between;
+	// max-height: 80%;
+	// position: relative;
+	// flex: 1;
 }
 
 .occupancy_buttons {
@@ -116,7 +89,8 @@ export default defineComponent({
 
 .occupancy-rate {
 	font-size: 14px;
-	text-align: center;
+	text-align: start;
+	margin: 0;
 }
 
 .occupancy__button {
@@ -132,12 +106,6 @@ export default defineComponent({
 		color: white;
 		cursor: pointer;
 	}
-}
-
-.dunutGraphtext {
-	position: absolute;
-	transform: translateY(36px) translateX(85px);
-	color: $purple;
 }
 
 .donut {
@@ -191,52 +159,6 @@ export default defineComponent({
 		fill: transparent;
 		stroke: #ababab;
 		stroke-width: 3;
-	}
-}
-
-.module-layout {
-	background-color: $BlackRussian;
-	color: white;
-	padding: $m;
-
-	&__header {
-		display: flex;
-		align-items: center;
-
-		&__icon {
-			width: 24px;
-			height: 24px;
-			stroke: $white;
-			margin-right: $xxs;
-		}
-
-		&__title {
-			font-size: 16px;
-		}
-	}
-}
-
-.donut-chart {
-	position: relative;
-	border-radius: 50%;
-	overflow: hidden;
-
-	.slice {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
-	}
-
-	.chart-center {
-		position: absolute;
-		border-radius: 50%;
-
-		span {
-			display: block;
-			text-align: center;
-		}
 	}
 }
 </style>

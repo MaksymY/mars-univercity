@@ -27,6 +27,26 @@
 					>
 						{{ roomInfo.locked ? "Vérouillé" : "Déverouillée" }}
 					</p>
+					<template v-if="roomSensorsData">
+						<OccupancyRateMiniModule
+							:occupancy-data="roomInfo"
+							class="occupancy"
+							@capacity-changed="getRoomData"
+						></OccupancyRateMiniModule>
+						<ElectricityMiniModule
+							class="electricity"
+							:data-sets="roomSensorsData.Watts"
+						></ElectricityMiniModule>
+						<OxygenMiniModule class="oxygen" :data-sets="roomSensorsData.Oxygen"></OxygenMiniModule>
+						<TemperatureMiniModule
+							class="temperature"
+							:data-sets="roomSensorsData.Temperature"
+						></TemperatureMiniModule>
+						<LuminosityMiniModule
+							class="luminosity"
+							:data-sets="roomSensorsData.Luminosity"
+						></LuminosityMiniModule>
+					</template>
 					<Button class="map__button" :text="'Configurer'" @click="goToRoom" />
 				</div>
 			</div>
@@ -36,7 +56,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import { getRooms } from "@/services/api";
+import { getRooms, getRoomSensorsData } from "@/services/api";
 import { Rooms } from "@/services/types/map";
 import Button from "@/components/atoms/Button.vue";
 import Icon from "@/components/atoms/Icon.vue";
@@ -44,6 +64,13 @@ import MainLayout from "@/layouts/MainLayout.vue";
 import RightMap from "./components/organismes/RightMap.vue";
 import LeftMap from "./components/organismes/LeftMap.vue";
 import CenterMap from "./components/organismes/CenterMap.vue";
+
+//- Import mini modules
+import OccupancyRateMiniModule from "./components/molecules/modules/OccupancyRateMiniModule.vue";
+import ElectricityMiniModule from "./components/molecules/modules/ElectricityMiniModule.vue";
+import LuminosityMiniModule from "./components/molecules/modules/LuminosityMiniModule.vue";
+import OxygenMiniModule from "./components/molecules/modules/OxygenMiniModule.vue";
+import TemperatureMiniModule from "./components/molecules/modules/TemperatureMiniModule.vue";
 
 export default defineComponent({
 	name: "Map",
@@ -54,6 +81,11 @@ export default defineComponent({
 		CenterMap,
 		Button,
 		Icon,
+		OccupancyRateMiniModule,
+		ElectricityMiniModule,
+		LuminosityMiniModule,
+		OxygenMiniModule,
+		TemperatureMiniModule,
 	},
 	data() {
 		return {
@@ -62,6 +94,7 @@ export default defineComponent({
 			roomLeft: null,
 			roomRight: null,
 			roomCenter: null,
+			roomSensorsData: null,
 		};
 	},
 	async mounted() {
@@ -97,8 +130,19 @@ export default defineComponent({
 				);
 			});
 		},
+		async getRoomSensorsData(nodeId: any) {
+			const data = await getRoomSensorsData(nodeId);
+			const dataMappedByMeasurement: any = {};
+			for (const sensorData of data.roomData) {
+				if (sensorData._measurement in dataMappedByMeasurement) {
+					dataMappedByMeasurement[sensorData._measurement].unshift(sensorData);
+				} else dataMappedByMeasurement[sensorData._measurement] = [sensorData];
+			}
+			this.roomSensorsData = dataMappedByMeasurement;
+		},
 		openInfo(value: any) {
 			this.roomInfo = value.room;
+			this.getRoomSensorsData(this.roomInfo.node_id);
 		},
 		goToRoom() {
 			this.$router.push({ name: "Dashboard", params: { roomId: this.roomInfo._id } });
@@ -107,7 +151,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .map {
 	height: 100vh;
 
@@ -150,7 +194,7 @@ export default defineComponent({
 		text-align: center;
 		background-color: $Pau;
 		border-radius: 10px;
-		width: 300px;
+		width: 400px;
 	}
 	&__infos-close {
 		width: 16px;

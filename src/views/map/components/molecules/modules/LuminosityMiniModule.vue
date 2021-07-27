@@ -1,26 +1,26 @@
 <template>
-	<ModuleLayout label="Luminosité" icon="oxygen-icon">
-		<template #content>
-			<div class="luminosity">
-				<img class="luminosity__image" :src="getImagePath" />
-				<p class="luminosity__text">
-					{{ dataSets[5]._value }} Lx
-					<span class="luminosity__text__status">{{ GetLuminosityStatus }}</span>
-				</p>
-			</div>
+	<MiniRoomDataItem label="Luminosité" icon="oxygen-icon">
+		<template #left-side-infos>
+			<p class="luminosity__text">
+				{{ dataSets[5]._value }} Lx
+				<span class="luminosity__text__status">{{ GetLuminosityStatus }}</span>
+			</p>
 		</template>
-	</ModuleLayout>
+		<template #content>
+			<img class="image" :src="getImagePath" />
+		</template>
+	</MiniRoomDataItem>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import ModuleLayout from "../ModuleLayout.vue";
+import MiniRoomDataItem from "../MiniRoomDataItem.vue";
 
 export default defineComponent({
 	name: "LuminosityModule",
 	components: {
-		ModuleLayout,
+		MiniRoomDataItem,
 	},
 	props: {
 		dataSets: {
@@ -54,25 +54,8 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-.luminosity {
-	display: flex;
-	align-items: center;
-	flex-direction: column;
-	position: relative;
-
-	&__image {
-		max-width: 70%;
-		max-height: 50%;
-	}
-
-	&__text {
-		font-size: 14px;
-		font-weight: bold;
-		margin: 0;
-		&__status {
-			color: $LightBlue;
-		}
-	}
+<style lang="scss">
+.image {
+	max-height: 100%;
 }
 </style>
