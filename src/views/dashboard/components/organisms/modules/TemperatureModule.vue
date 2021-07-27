@@ -88,7 +88,7 @@ export default defineComponent({
 		display: flex;
 		justify-content: center;
 		align-items: center;
-		margin-bottom: 1rem;
+		margin-bottom: 0.5rem;
 	}
 
 	&__slug {

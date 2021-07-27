@@ -125,7 +125,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .module-layout {
 	background-color: $BlackRussian;
 	color: white;
@@ -159,7 +159,7 @@ export default defineComponent({
 	}
 
 	canvas {
-		max-height: 80%;
+		max-height: 72%;
 	}
 }
 </style>
