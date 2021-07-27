@@ -1,63 +1,65 @@
 <template>
-	<div v-if="roomDetails" class="dashboard">
-		<div class="dashboard__datas">
-			<router-link class="dashboard__datas__back-link" to="/">
-				<img src="@/assets/arrow-left.svg" alt="back-arrow" />
-				Retour à la carte
-			</router-link>
-			<img
-				class="dashboard__datas__illustration"
-				:src="roomDetails.img_url"
-				alt="Image de la salle"
-			/>
-			<h1 class="dashboard__datas__title">{{ roomDetails.label }}</h1>
-			<div v-if="roomSensorsData" class="dashboard__datas__charts">
-				<OccupancyRateModule
-					:occupancy-data="roomDetails"
-					class="dashboard__datas__charts__occupancy"
-					@capacity-changed="getRoomData"
-				></OccupancyRateModule>
-				<div class="dashboard__datas__charts__door-management">
-					<span>Verrouillage de la porte</span>
-					<div class="toggles">
-						<Toggle
-							class="toogles-item"
-							text="Déverouillée"
-							:is-active="!roomDetails.locked ? true : false"
-							active-color="green"
-							@toggle-clicked="roomDetails.locked ? changeRoomStatus() : null"
-							@locked-door="roomDetails"
-						></Toggle>
-						<Toggle
-							class="toogles-item"
-							text="Verouillée"
-							:is-active="roomDetails.locked ? true : false"
-							active-color="red"
-							@click="!roomDetails.locked ? changeRoomStatus() : null"
-							@locked-door="roomDetails"
-						></Toggle>
+	<MainLayout>
+		<div v-if="roomDetails" class="dashboard">
+			<div class="dashboard__datas">
+				<router-link class="dashboard__datas__back-link" to="/">
+					<img src="@/assets/arrow-left.svg" alt="back-arrow" />
+					Retour à la carte
+				</router-link>
+				<img
+					class="dashboard__datas__illustration"
+					:src="roomDetails.img_url"
+					alt="Image de la salle"
+				/>
+				<h1 class="dashboard__datas__title">{{ roomDetails.label }}</h1>
+				<div v-if="roomSensorsData" class="dashboard__datas__charts">
+					<OccupancyRateModule
+						:occupancy-data="roomDetails"
+						class="dashboard__datas__charts__occupancy"
+						@capacity-changed="getRoomData"
+					></OccupancyRateModule>
+					<div class="dashboard__datas__charts__door-management">
+						<span>Verrouillage de la porte</span>
+						<div class="toggles">
+							<Toggle
+								class="toogles-item"
+								text="Déverouillée"
+								:is-active="!roomDetails.locked ? true : false"
+								active-color="green"
+								@toggle-clicked="roomDetails.locked ? changeRoomStatus() : null"
+								@locked-door="roomDetails"
+							></Toggle>
+							<Toggle
+								class="toogles-item"
+								text="Verouillée"
+								:is-active="roomDetails.locked ? true : false"
+								active-color="red"
+								@click="!roomDetails.locked ? changeRoomStatus() : null"
+								@locked-door="roomDetails"
+							></Toggle>
+						</div>
 					</div>
+					<ElectricityModule
+						class="dashboard__datas__charts__electricity"
+						:data-sets="roomSensorsData.Watts"
+					></ElectricityModule>
+					<OxygenModule
+						class="dashboard__datas__charts__oxygen"
+						:data-sets="roomSensorsData.Oxygen"
+					></OxygenModule>
+					<TemperatureModule
+						class="dashboard__datas__charts__temperature"
+						:data-sets="roomSensorsData.Temperature"
+					></TemperatureModule>
+					<LuminosityModule
+						class="dashboard__datas__charts__luminosity"
+						:data-sets="roomSensorsData.Luminosity"
+					></LuminosityModule>
 				</div>
-				<ElectricityModule
-					class="dashboard__datas__charts__electricity"
-					:data-sets="roomSensorsData.Watts"
-				></ElectricityModule>
-				<OxygenModule
-					class="dashboard__datas__charts__oxygen"
-					:data-sets="roomSensorsData.Oxygen"
-				></OxygenModule>
-				<TemperatureModule
-					class="dashboard__datas__charts__temperature"
-					:data-sets="roomSensorsData.Temperature"
-				></TemperatureModule>
-				<LuminosityModule
-					class="dashboard__datas__charts__luminosity"
-					:data-sets="roomSensorsData.Luminosity"
-				></LuminosityModule>
 			</div>
+			<RoomOccupants class="dashboard__room-occupants"></RoomOccupants>
 		</div>
-		<RoomOccupants class="dashboard__room-occupants"></RoomOccupants>
-	</div>
+	</MainLayout>
 </template>
 
 <script lang="js">
@@ -76,6 +78,8 @@ import { getRoomSensorsData, getRoomDetails, updateRoomLocked } from "@/services
 
 import Toggle from "@/components/atoms/Toggle.vue"
 
+import MainLayout from "@/layouts/MainLayout.vue";
+
 export default defineComponent({
 	name: "Dashboard",
 	components: {
@@ -86,6 +90,7 @@ export default defineComponent({
 		TemperatureModule,
 		RoomOccupants,
 		Toggle,
+		MainLayout,
 	},
 		emits: ["locked-door"],
 	data() {
@@ -136,7 +141,7 @@ export default defineComponent({
 	display: flex;
 	background-image: url("./../../assets/background-with-cross.jpg");
 	color: $white;
-
+	height: calc(100vh - 120px);
 	&__datas {
 		padding: 1rem;
 		width: 70%;
@@ -196,6 +201,7 @@ export default defineComponent({
 				font-size: 16px;
 
 				.toggles {
+					display: flex;
 					.toogles-item {
 						margin-left: 0.5rem;
 					}

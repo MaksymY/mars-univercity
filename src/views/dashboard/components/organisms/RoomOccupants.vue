@@ -58,6 +58,8 @@ export default defineComponent({
 	background-color: $BlackRussian;
 	color: $white;
 	padding: 1rem;
+	border-top: 2px solid black;
+	border-bottom: 1px solid black;
 
 	p {
 		text-align: center;
