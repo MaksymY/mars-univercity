@@ -4,15 +4,15 @@
 			<div class="map__wrapper">
 				<div class="map__main">
 					<LeftMap
-						:selectInfo="roomInfo ? true : false"
-						:leftRooms="roomLeft"
+						:select-info="roomInfo ? true : false"
+						:left-rooms="roomLeft"
 						class="map__main-left"
 						@open-info="openInfo"
 					/>
-					<CenterMap :centerRooms="roomCenter" class="map__main-center" @open-info="openInfo" />
+					<CenterMap :center-rooms="roomCenter" class="map__main-center" @open-info="openInfo" />
 					<RightMap
-						:selectInfo="roomInfo ? true : false"
-						:rightRooms="roomRight"
+						:select-info="roomInfo ? true : false"
+						:right-rooms="roomRight"
 						class="map__main-right"
 						@open-info="openInfo"
 					/>
@@ -27,7 +27,7 @@
 					>
 						{{ roomInfo.locked ? "Vérouillé" : "Déverouillée" }}
 					</p>
-					<Button class="map__button" :text="'Configurer'" />
+					<Button class="map__button" :text="'Configurer'" @click="goToRoom" />
 				</div>
 			</div>
 		</MainLayout>
@@ -57,7 +57,7 @@ export default defineComponent({
 	},
 	data() {
 		return {
-			roomInfo: null,
+			roomInfo: null as any,
 			rooms: null,
 			roomLeft: null,
 			roomRight: null,
@@ -99,6 +99,9 @@ export default defineComponent({
 		},
 		openInfo(value: any) {
 			this.roomInfo = value.room;
+		},
+		goToRoom() {
+			this.$router.push({ name: "Dashboard", params: { roomId: this.roomInfo._id } });
 		},
 	},
 });
