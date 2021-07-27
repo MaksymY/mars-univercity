@@ -1,9 +1,9 @@
 <template>
-	<div class="centerHallRoom">
+	<div class="centerHallRoom" :class="{ 'centerHallRoom--select': select }">
 		<Icon class="centerHallRoom__icon" href="right-room" />
-		<p class="centerHallRoom__name">{{ room }}</p>
-		<Door class="centerHallRoom__backDoor" :status="open" />
-		<Door class="centerHallRoom__frontDoor" :status="open" />
+		<p class="centerHallRoom__name">{{ data.label }}</p>
+		<Door class="centerHallRoom__backDoor" :status="data.locked" />
+		<Door class="centerHallRoom__frontDoor" :status="data.locked" />
 	</div>
 </template>
 
@@ -19,10 +19,14 @@ export default defineComponent({
 		Door,
 	},
 	props: {
-		room: {
-			type: String,
+		data: {
+			type: Object,
 			required: true,
-			default: "",
+			default: Object,
+		},
+		select: {
+			type: Boolean,
+			rrequired: false,
 		},
 	},
 });
@@ -39,6 +43,10 @@ export default defineComponent({
 	border-radius: 36px;
 	background-color: $BlackRussian;
 	position: relative;
+
+	&--select {
+		background-color: rgba(103, 118, 255, 0.74);
+	}
 
 	&__backDoor {
 		transform: translateY(-4px);
